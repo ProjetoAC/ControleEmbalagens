@@ -31,6 +31,8 @@ public class ProdutoDao {
     static String DELETE = "DELETE FROM produtos  WHERE idProduto = ?;";
     static String SELECTbuscaEmbalagem = "SELECT a.descricao FROM produtos INNER JOIN embalagens a "
             + "USING (idEmbalagem) WHERE idembalagem =?;";
+    static String SELECTbuscaNomeProduto = "SELECT p.nome FROM devolucao INNER JOIN produtos a "
+            + "USING (idProduto) WHERE idProduto = ?;";
 
     public boolean insereCadastroProduto(Produto produto) {
         ResultSet rs;
@@ -119,5 +121,24 @@ public class ProdutoDao {
             JOptionPane.showMessageDialog(null, "Erro:" + ex);
         }
         return embalagem;
+    }
+
+    public String buscarNomeProduto(int idProduto) {
+        String nome = "";
+        try {
+            PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(SELECTbuscaNomeProduto);
+            preparedStatement.setInt(1, idProduto);
+            //System.out.println("" + preparedStatement.toString());
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                nome = rs.getString("nome");
+            }
+
+        } catch (Exception ex) {
+            System.out.println("Problema ao carregar cadastro de cidades : " + ex);
+            JOptionPane.showMessageDialog(null, "Erro:" + ex);
+        }
+        return nome;
     }
 }

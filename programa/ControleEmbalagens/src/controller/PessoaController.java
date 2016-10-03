@@ -15,27 +15,31 @@ import java.util.ArrayList;
  */
 public class PessoaController {
 
-        PessoaDao pessoaDao;
+    PessoaDao pessoaDao;
 
-        public PessoaController() {
-            if (pessoaDao == null) {
-                pessoaDao = new PessoaDao();
-            }
-        }
-
-        public boolean insereCadastroPessoa(Pessoa pessoa) {
-            if (pessoa.getIdPessoa() != 0) {
-                return pessoaDao.updateCadastroPessoa(pessoa);
-            } else {
-                return pessoaDao.insereCadastroPessoa(pessoa);
-            }
-        }
-
-        public ArrayList<Pessoa> buscaCadastroPessoa() {
-            return pessoaDao.buscaCadastroPessoa();
-        }
-
-        public boolean excluirCadastroPessoa(int id) {
-            return pessoaDao.excluirCadastroPessoa(id);
+    public PessoaController() {
+        if (pessoaDao == null) {
+            pessoaDao = new PessoaDao();
         }
     }
+
+    public boolean insereCadastroPessoa(Pessoa pessoa) {
+        if (pessoa.getIdPessoa() != 0) {
+            return pessoaDao.updateCadastroPessoa(pessoa);
+        } else {
+            return pessoaDao.insereCadastroPessoa(pessoa);
+        }
+    }
+
+    public ArrayList<Pessoa> buscaCadastroPessoa() {
+        return pessoaDao.buscaCadastroPessoa();
+    }
+
+    public boolean excluirCadastroPessoa(int id) {
+        return pessoaDao.excluirCadastroPessoa(id);
+    }
+
+    public int buscaIdNomePessoa(String nome) {
+        return pessoaDao.buscaIdNomePessoa(nome);
+    }
+}

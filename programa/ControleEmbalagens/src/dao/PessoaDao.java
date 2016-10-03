@@ -22,11 +22,12 @@ public class PessoaDao {
             + "VALUES ((SELECT COALESCE(max(idpessoa)+1,1) FROM pessoas),?,?,?,?,?,?,?,?,?,?,?,?,?);";
     static String SELECTALL = "SELECT idpessoa, idcidade, nome, cpf, rg, endereco, numero, bairro, "
             + "complemento, cep, telefonefixo, telefonecelular, email, sexo "
-            + "FROM pessoas order by idpessoa;";
+            + "FROM pessoas order by nome;";
     static String UPDATE = "UPDATE pessoas SET idpessoa = ?, idcidade = ?, nome = ?, cpf = ?, rg = ?, "
             + "endereco = ?, numero = ?, bairro = ? , complemento = ?, cep = ?, telefonefixo = ?, "
             + "telefonecelular = ?, email = ?, sexo = ?  WHERE idpessoa = ? ;";
     static String DELETE = "DELETE FROM pessoas  WHERE idpessoa = ?;";
+    static String BUSCAIDPESSOA = "SELECT idPessoa FROM pessoas WHERE nome = ?;";
 
     public boolean insereCadastroPessoa(Pessoa pessoa) {
         ResultSet rs;
@@ -120,7 +121,7 @@ public class PessoaDao {
     public boolean excluirCadastroPessoa(int id) {
         try {
             PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(DELETE);
-            preparedStatement.setInt(1,id);
+            preparedStatement.setInt(1, id);
             preparedStatement.execute();
             return true;
         } catch (Exception ex) {
@@ -128,5 +129,21 @@ public class PessoaDao {
             JOptionPane.showMessageDialog(null, "Erro:" + ex);
         }
         return false;
+    }
+
+    public int buscaIdNomePessoa(String nome) {
+        int id = 0;
+
+        try {
+            PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(BUSCAIDPESSOA);
+            preparedStatement.setString(1, nome);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                id = rs.getInt("idPessoa");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Problema ao carregar idPessoa: " + ex);
+        }
+        return id;
     }
 }

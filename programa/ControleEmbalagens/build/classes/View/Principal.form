@@ -128,12 +128,12 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="jmArmaz">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Armazenagem"/>
+            <Property name="text" type="java.lang.String" value="Consumo"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jmiLancamento">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Lan&#xe7;ar Armazenamento"/>
+                <Property name="text" type="java.lang.String" value="Lan&#xe7;ar Produto Utilizado"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiLancamentoActionPerformed"/>
@@ -150,6 +150,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Lan&#xe7;ar Devolu&#xe7;&#xe3;o"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmiDevolverActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

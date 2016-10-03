@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
  * @author j0nas
  */
 public class EmpresaDao {
+
     Statement st;
     PreparedStatement prepst;
 
@@ -27,11 +28,12 @@ public class EmpresaDao {
             + "  VALUES ((SELECT COALESCE(max(idempresa)+1,1) FROM empresas),?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
     static String SELECTALL = "SELECT idEmpresa, idCidade, nome, cnpj, endereco, numero, bairro, "
             + "complemento, cep, telefonefixo, telefonecelular, email"
-            + " FROM empresas order by idEmpresa;";
+            + " FROM empresas order by nome;";
     static String UPDATE = "UPDATE empresas SET idEmpresa = ?, idCidade = ?, nome = ?, cnpj = ?, "
             + "endereco = ?, numero = ?, bairro = ? , complemento = ?, "
-            + "cep = ?, telefonefixo = ?, telefonecelular = ?, email = ? WHERE idEmpresa = ? ;";
+            + "cep = ?, telefonefixo = ?, telefonecelular = ?, email = ? WHERE idEmpresa = ?;";
     static String DELETE = "DELETE FROM empresas  WHERE idEmpresa = ?;";
+    static String BUSCAIDEMPRESA = "SELECT idEmpresa FROM empresas WHERE nome = ?;";
 
     public boolean insereCadastroEmpresa(Empresa empresa) {
         ResultSet rs;
@@ -119,7 +121,7 @@ public class EmpresaDao {
     public boolean excluirCadastroEmpresa(int id) {
         try {
             PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(DELETE);
-            preparedStatement.setInt(1,id);
+            preparedStatement.setInt(1, id);
             preparedStatement.execute();
             return true;
         } catch (Exception ex) {
@@ -127,5 +129,21 @@ public class EmpresaDao {
             JOptionPane.showMessageDialog(null, "Erro:" + ex);
         }
         return false;
+    }
+
+    public int buscaIdNomeEmpresa(String nome) {
+        int id = 0;
+
+        try {
+            PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(BUSCAIDEMPRESA);
+            preparedStatement.setString(1, nome);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                id = rs.getInt("idEmpresa");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Problema ao carregar idEmpresa: " + ex);
+        }
+        return id;
     }
 }

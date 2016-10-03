@@ -14,27 +14,32 @@ import java.util.ArrayList;
  * @author j0nas
  */
 public class EmpresaController {
-            EmpresaDao empresaDao;
 
-        public EmpresaController() {
-            if (empresaDao == null) {
-                empresaDao = new EmpresaDao();
-            }
-        }
+    EmpresaDao empresaDao;
 
-        public boolean insereCadastroEmpresa(Empresa empresa) {
-            if (empresa.getIdEmpresa() != 0) {
-                return empresaDao.updateCadastroEmpresa(empresa);
-            } else {
-                return empresaDao.insereCadastroEmpresa(empresa);
-            }
+    public EmpresaController() {
+        if (empresaDao == null) {
+            empresaDao = new EmpresaDao();
         }
+    }
 
-        public ArrayList<Empresa> buscaCadastroEmpresa() {
-            return empresaDao.buscaCadastroEmpresa();
+    public boolean insereCadastroEmpresa(Empresa empresa) {
+        if (empresa.getIdEmpresa() != 0) {
+            return empresaDao.updateCadastroEmpresa(empresa);
+        } else {
+            return empresaDao.insereCadastroEmpresa(empresa);
         }
+    }
 
-        public boolean excluirCadastroEmpresa(int id) {
-            return empresaDao.excluirCadastroEmpresa(id);
-        }
+    public ArrayList<Empresa> buscaCadastroEmpresa() {
+        return empresaDao.buscaCadastroEmpresa();
+    }
+
+    public boolean excluirCadastroEmpresa(int id) {
+        return empresaDao.excluirCadastroEmpresa(id);
+    }
+
+    public int buscaIdNomEmpresa(String nome) {
+        return empresaDao.buscaIdNomeEmpresa(nome);
+    }
 }

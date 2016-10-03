@@ -42,4 +42,8 @@ public class ProdutoController {
     public String buscarEmbalagem(int idEmbalagem) {
         return produtoDao.buscarEmbalagem(idEmbalagem);
     }
+
+    public String buscarNomeProduto(int idProduto) {
+        return produtoDao.buscarNomeProduto(idProduto);
+    }
 }

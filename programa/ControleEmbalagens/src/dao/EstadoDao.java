@@ -53,7 +53,6 @@ public class EstadoDao {
 
         try {
             PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(SELECTALL);
-            System.out.println(""+ preparedStatement.toString());
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {

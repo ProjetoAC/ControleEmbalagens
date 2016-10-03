@@ -30,7 +30,8 @@ public class Principal extends javax.swing.JFrame {
     CadastroCidades telaCadCidades;
     CadastroEmbalagens telaCadEmbalagem;
     CadastroProdutos telaCadProduto;
-    Armazenagem telaArmazenagem;
+    ProdutoUtilizado telaProdUtilizado;
+    Devolucao telaDevolucao;
     Sobre telaSobre;
 
     @SuppressWarnings("unchecked")
@@ -149,9 +150,9 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(jmCadastro);
 
-        jmArmaz.setText("Armazenagem");
+        jmArmaz.setText("Consumo");
 
-        jmiLancamento.setText("Lançar Armazenamento");
+        jmiLancamento.setText("Lançar Produto Utilizado");
         jmiLancamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jmiLancamentoActionPerformed(evt);
@@ -164,6 +165,11 @@ public class Principal extends javax.swing.JFrame {
         jmDev.setText("Devolução");
 
         jmiDevolver.setText("Lançar Devolução");
+        jmiDevolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiDevolverActionPerformed(evt);
+            }
+        });
         jmDev.add(jmiDevolver);
 
         jMenuBar1.add(jmDev);
@@ -266,12 +272,12 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmSobreActionPerformed
 
     private void jmiLancamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiLancamentoActionPerformed
-        if (telaArmazenagem == null) {
-            telaArmazenagem = new Armazenagem();
+        if (telaProdUtilizado == null) {
+            telaProdUtilizado = new ProdutoUtilizado();
         }
-        jdpPrincipal.add(telaArmazenagem);
-        telaArmazenagem.setVisible(true);
-        centralizaForm(telaArmazenagem);
+        jdpPrincipal.add(telaProdUtilizado);
+        telaProdUtilizado.setVisible(true);
+        centralizaForm(telaProdUtilizado);
     }//GEN-LAST:event_jmiLancamentoActionPerformed
 
     private void jmiSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSobreActionPerformed
@@ -282,6 +288,15 @@ public class Principal extends javax.swing.JFrame {
         telaSobre.setVisible(true);
         centralizaForm(telaSobre);
     }//GEN-LAST:event_jmiSobreActionPerformed
+
+    private void jmiDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiDevolverActionPerformed
+        if (telaDevolucao == null) {
+            telaDevolucao = new Devolucao();
+        }
+        jdpPrincipal.add(telaDevolucao);
+        telaDevolucao.setVisible(true);
+        centralizaForm(telaDevolucao);
+    }//GEN-LAST:event_jmiDevolverActionPerformed
 
     /**
      * @param args the command line arguments

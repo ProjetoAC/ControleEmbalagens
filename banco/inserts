@@ -106,9 +106,9 @@ INSERT INTO produtos(idproduto, idembalagem, nome, descricao, ClasseTox) VALUES
 (3, 3, 'ROUNDUP READY','herbicida de amplo espectro para controle de plantas infestantes','Classe III - medianamente tóxico – cor azul'),
 (4, 4, 'TOCHA','herbicida controle pósemergente de plantas daninhas e na dessecação de culturas','Classe IV – pouco tóxico – cor verde');
 
-INSERT INTO devolucao(idDevolucao, idempresa, idproduto, idpessoa, nf, data, quantidade, valor) VALUES 
-(1, 1, 1, 1, 2323, '2016-09-15', 5,5029),
-(2, 1, 2, 2, 2323, '2016-09-15', 2,3467),
-(3, 1, 3, 3, 2323, '2016-09-15', 5,47895),
-(4, 1, 4, 1, 2323, '2016-09-15', 7,4069);
+INSERT INTO devolucao(idDevolucao, idempresa, idproduto, idpessoa, data, quantidade,  flagentrega, dataentrega) VALUES 
+(1, 1, 1, 1, '2016-09-15', 5, 'F', '2016-10-26'),
+(2, 1, 2, 2, '2016-08-05', 2, 'T', '2016-10-26'),
+(3, 1, 3, 3, '2016-07-21', 5, 'F', '2016-10-26'),
+(4, 1, 4, 1, '2016-06-10', 7, 'T', '2016-10-26');
 
