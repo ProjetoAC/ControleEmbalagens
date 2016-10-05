@@ -31,7 +31,7 @@ public class Principal extends javax.swing.JFrame {
     CadastroEmbalagens telaCadEmbalagem;
     CadastroProdutos telaCadProduto;
     ProdutoUtilizado telaProdUtilizado;
-    Devolucao telaDevolucao;
+    DevolucaoEmbalagem telaDevolucao;
     Sobre telaSobre;
 
     @SuppressWarnings("unchecked")
@@ -291,7 +291,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void jmiDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiDevolverActionPerformed
         if (telaDevolucao == null) {
-            telaDevolucao = new Devolucao();
+            telaDevolucao = new DevolucaoEmbalagem();
         }
         jdpPrincipal.add(telaDevolucao);
         telaDevolucao.setVisible(true);

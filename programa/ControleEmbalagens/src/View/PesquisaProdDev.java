@@ -211,7 +211,7 @@ public class PesquisaProdDev extends javax.swing.JInternalFrame {
     }
 
     DefaultTableModel modeloTabela = new DefaultTableModel(new Object[]{
-        "Código", "Nome do Produto", "Embalagem"}, 0) {
+        "Código", "Nome do Produto", "Data", "Quantidade"}, 0) {
         public boolean isCellEditable(int rowIndex, int mColIndex) {
             return false;
         }
@@ -228,8 +228,9 @@ public class PesquisaProdDev extends javax.swing.JInternalFrame {
         tblPesqProduto.getColumnModel().getColumn(0).setMinWidth(0);
         tblPesqProduto.getColumnModel().getColumn(0).setPreferredWidth(0);
         tblPesqProduto.getColumnModel().getColumn(0).setMaxWidth(0);
-        tblPesqProduto.getColumnModel().getColumn(1).setPreferredWidth(250);//nome
-        tblPesqProduto.getColumnModel().getColumn(2).setPreferredWidth(250);//descricao
+        tblPesqProduto.getColumnModel().getColumn(1).setPreferredWidth(250);
+        tblPesqProduto.getColumnModel().getColumn(2).setPreferredWidth(100);
+        tblPesqProduto.getColumnModel().getColumn(3).setPreferredWidth(50);
 
     }
 
@@ -250,12 +251,13 @@ public class PesquisaProdDev extends javax.swing.JInternalFrame {
         Object[] dados = new Object[3];
         dados[0] = devolucao.getIdDevolucao();
         dados[1] = carregaProdutoTabela(devolucao.getIdProduto());
-        dados[2] = carregaEmbalagemTabela(produto.getIdEmbalagem());
+        dados[2] = devolucao.getData();
+        dados[3] = devolucao.getQuantidade();
         modeloTabela.addRow(dados);
 
     }
 
-    private int getIdProdutoSelecionado() {
+    private int getIdDevolucaoSelecionado() {
         int retorno = 0;
         retorno = Integer.parseInt(modeloTabela.getValueAt(tblPesqProduto.getSelectedRow(), 0).toString());
         //return Integer.parseInt(modeloTabela.getValueAt(tblProdutos.getSelectedRow(), 0).toString());
@@ -277,14 +279,6 @@ public class PesquisaProdDev extends javax.swing.JInternalFrame {
         listaDevolucao = lista;
     }
 
-    private String carregaEmbalagemTabela(int idEmbalagem) {
-        String embalagem = "";
-        if (ec == null) {
-            ec = new EmbalagemController();
-        }
-        return embalagem = pc.buscarEmbalagem(idEmbalagem);
-    }
-
     private String carregaProdutoTabela(int idProduto) {
         String nome = "";
         if (pc == null) {
@@ -293,6 +287,7 @@ public class PesquisaProdDev extends javax.swing.JInternalFrame {
         return nome = pc.buscarNomeProduto(idProduto);
     }
 
+/*
     private void pesquisar() {
         modeloTabela();
         for (Devolucao d : listaDevolucao) {
@@ -300,17 +295,17 @@ public class PesquisaProdDev extends javax.swing.JInternalFrame {
                 insereDadosTabela(d);
             }
         }
-    }
+    }*/
 
     private void selecionaDadosTabela() {
-        int id = getIdProdutoSelecionado();
-        int a = 0, b = 0;
-        String c = "", d = "";
-        for (Devolucao d : listaDevolucao) {
-            if (p.getIdProduto() == id) {
-                a = p.getIdProduto();
-                b = p.getIdEmbalagem();
-                c = p.getNome();
+        int id = getIdDevolucaoSelecionado();
+        int a = 0, b = 0, c = 0, d = 0;
+        for (Devolucao devolucao : listaDevolucao) {
+            if (devolucao.getIdDevolucao() == id) {
+                a = devolucao.getIdDevolucao();
+                b = devolucao.getIdProduto();
+                c = devolucao.getData();
+                d = devolucao.getQuantidade();
                 break;
             }
         }

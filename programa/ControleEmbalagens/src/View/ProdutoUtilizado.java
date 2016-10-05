@@ -42,6 +42,7 @@ public class ProdutoUtilizado extends javax.swing.JInternalFrame {
 
     Principal telaPrincipal;
     PesquisaProdUti telaPesqProduto;
+    PesquisaProdDev telaPesqProdDev;
 
     /*
      PesquisarPessoa telaPesqPessoa;
@@ -307,10 +308,6 @@ public class ProdutoUtilizado extends javax.swing.JInternalFrame {
         limparCampos(true);
     }//GEN-LAST:event_btnLimparActionPerformed
 
-    private void btnPesqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesqActionPerformed
-
-    }//GEN-LAST:event_btnPesqActionPerformed
-
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnSairActionPerformed
@@ -324,6 +321,16 @@ public class ProdutoUtilizado extends javax.swing.JInternalFrame {
         telaPrincipal.centralizaForm(telaPesqProduto);
         this.dispose();
     }//GEN-LAST:event_btnPesqPActionPerformed
+
+    private void btnPesqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesqActionPerformed
+        if (telaPesqProdDev == null) {
+            telaPesqProdDev = new PesquisaProdDev();
+        }
+        Principal.jdpPrincipal.add(telaPesqProdDev);
+        telaPesqProdDev.setVisible(true);
+        telaPrincipal.centralizaForm(telaPesqProdDev);
+        this.dispose();
+    }//GEN-LAST:event_btnPesqActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExcluir;
@@ -372,6 +379,8 @@ public class ProdutoUtilizado extends javax.swing.JInternalFrame {
         }
 
         if (limpar) {
+            carregaNomeEmpresa();
+            carregaNomePessoa();
             txtProduto.setText("");
             txtEmbalagem.setText("");
             txtClasseTox.setText("");
@@ -395,7 +404,14 @@ public class ProdutoUtilizado extends javax.swing.JInternalFrame {
         if (dv == null) {
             dv = new DevolucaoController();
         }
-
+        if (pec == null) {
+            pec = new PessoaController();
+        }
+        if (ec == null) {
+            ec = new EmpresaController();
+        }
+        devolucao.setIdEmpresa(ec.buscaIdNomEmpresa(jcbEmpresa.getSelectedItem().toString()));
+        devolucao.setIdPessoa(pec.buscaIdNomePessoa(jcbPessoa.getSelectedItem().toString()));
         devolucao.setIdProduto(idProduto);
         devolucao.setData(txtData.getText());
         devolucao.setQuantidade(Integer.parseInt(txtQtde.getText()));
@@ -419,6 +435,7 @@ public class ProdutoUtilizado extends javax.swing.JInternalFrame {
         txtEmbalagem.setText(pc.buscarEmbalagem(b));
         txtProduto.setText(c);
         txtClasseTox.setText(d);
+        txtData.grabFocus();
     }
 
     private void carregaNomePessoa() {

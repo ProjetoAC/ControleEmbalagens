@@ -5,54 +5,49 @@
  */
 package View;
 
+import Model.Devolucao;
+import controller.DevolucaoController;
 import controller.ProdutoController;
 import java.awt.Container;
-import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 /**
  *
  * @author j0nas
  */
-public class Armazenagem extends javax.swing.JInternalFrame {
+public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
 
     ProdutoController pc;
-    private int idProduto;
+    DevolucaoController dv;
+    Devolucao devolucao;
 
-    /**
-     * Pessoa pessoa; int idPessoa, idCidade; PessoaDao estado;
-     * ArrayList<Estado> listaEstado; ArrayList<Cidade> listaCidade;
-     */
-    public Armazenagem() {
+    public DevolucaoEmbalagem() {
         initComponents();
-        this.setTitle("Lançamento de Embalagens");
+        this.setTitle("Lançamento de Devolução");
         desativaBotao();
+
     }
 
-    /*
-     PesquisarPessoa telaPesqPessoa;
     Principal telaPrincipal;
-     */
+    PesquisaProdDev telaPesqProduto;
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jcbSim = new javax.swing.JCheckBox();
+        jcbNao = new javax.swing.JCheckBox();
+        jLabel2 = new javax.swing.JLabel();
+        txtQtde = new javax.swing.JFormattedTextField();
+        jLabel6 = new javax.swing.JLabel();
+        txtData = new javax.swing.JFormattedTextField();
         txtProduto = new javax.swing.JTextField();
         btnPesqP = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
         txtEmbalagem = new javax.swing.JTextField();
-        jcbPessoa = new javax.swing.JComboBox<>();
-        jcbEmpresa = new javax.swing.JComboBox<>();
-        jLabel5 = new javax.swing.JLabel();
-        jftData = new javax.swing.JFormattedTextField();
-        jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        txtNf = new javax.swing.JFormattedTextField();
-        txtQtde = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
         btnGravar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
@@ -61,37 +56,41 @@ public class Armazenagem extends javax.swing.JInternalFrame {
         jPanel3 = new javax.swing.JPanel();
         btnSair = new javax.swing.JButton();
 
-        setClosable(true);
+        jLabel1.setText("Produto:");
 
-        jLabel1.setText("Nome:");
+        jLabel3.setText("Embalagem vazia foi devolvida:");
 
-        jLabel2.setText("Empresa:");
+        jcbSim.setText("Sim");
 
-        jLabel3.setText("Produto:");
+        jcbNao.setSelected(true);
+        jcbNao.setText("Não");
 
-        btnPesqP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search.png"))); // NOI18N
-        btnPesqP.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Data Devolução:");
 
-        jLabel4.setText("Embalagem:");
-
-        txtEmbalagem.setEditable(false);
-
-        jLabel5.setText("Data entrada:");
-
-        try {
-            jftData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        jftData.setToolTipText("");
+        txtQtde.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
         jLabel6.setText("Quantidade:");
 
-        jLabel7.setText("Nota Fiscal N.:");
+        try {
+            txtData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtData.setToolTipText("");
 
-        txtNf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        txtProduto.setEditable(false);
 
-        txtQtde.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        btnPesqP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search.png"))); // NOI18N
+        btnPesqP.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnPesqP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesqPActionPerformed(evt);
+            }
+        });
+
+        txtEmbalagem.setEditable(false);
+
+        jLabel7.setText("Embalagem:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -100,73 +99,61 @@ public class Armazenagem extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jcbPessoa, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(txtProduto, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnPesqP, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
+                        .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtEmbalagem))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jcbEmpresa, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnPesqP, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jcbSim)
+                                .addGap(18, 18, 18)
+                                .addComponent(jcbNao))
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtQtde, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtNf, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jftData, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 8, Short.MAX_VALUE)))
+                                .addComponent(txtQtde, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1))
+                    .addComponent(btnPesqP, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jcbPessoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jcbEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3)
-                        .addComponent(txtProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnPesqP, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
+                    .addComponent(jLabel7)
                     .addComponent(txtEmbalagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jftData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7)
-                    .addComponent(txtNf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtQtde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                    .addComponent(jLabel3)
+                    .addComponent(jcbSim)
+                    .addComponent(jcbNao))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel6)
+                        .addComponent(txtQtde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         btnGravar.setText("Gravar");
@@ -202,12 +189,13 @@ public class Armazenagem extends javax.swing.JInternalFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(btnGravar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnPesq, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -220,7 +208,7 @@ public class Armazenagem extends javax.swing.JInternalFrame {
                     .addComponent(btnExcluir)
                     .addComponent(btnLimpar)
                     .addComponent(btnPesq))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         btnSair.setText("Sair");
@@ -254,28 +242,37 @@ public class Armazenagem extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnPesqPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesqPActionPerformed
+        if (telaPesqProduto == null) {
+            telaPesqProduto = new PesquisaProdDev();
+        }
+        Principal.jdpPrincipal.add(telaPesqProduto);
+        telaPesqProduto.setVisible(true);
+        telaPrincipal.centralizaForm(telaPesqProduto);
+        this.dispose();
+    }//GEN-LAST:event_btnPesqPActionPerformed
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
         gravarDados();
@@ -290,7 +287,7 @@ public class Armazenagem extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void btnPesqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesqActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_btnPesqActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
@@ -308,18 +305,15 @@ public class Armazenagem extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JComboBox<String> jcbEmpresa;
-    private javax.swing.JComboBox<String> jcbPessoa;
-    private javax.swing.JFormattedTextField jftData;
+    private javax.swing.JCheckBox jcbNao;
+    private javax.swing.JCheckBox jcbSim;
+    private javax.swing.JFormattedTextField txtData;
     private javax.swing.JTextField txtEmbalagem;
-    private javax.swing.JFormattedTextField txtNf;
     private javax.swing.JTextField txtProduto;
     private javax.swing.JFormattedTextField txtQtde;
     // End of variables declaration//GEN-END:variables
@@ -331,6 +325,15 @@ public class Armazenagem extends javax.swing.JInternalFrame {
         norteh.remove(0);
         norteh.validate();
         norteh.repaint();
+    }
+
+    public void dadosPesquisProduto(int a, int b, String c) {
+        if (pc == null) {
+            pc = new ProdutoController();
+        }
+        txtEmbalagem.setText(pc.buscarEmbalagem(b));
+        txtProduto.setText(c);
+
     }
 
     private void limparCampos(boolean pergunta) {
@@ -345,58 +348,35 @@ public class Armazenagem extends javax.swing.JInternalFrame {
         }
 
         if (limpar) {
-            jcbPessoa.removeAllItems();
-            jcbEmpresa.removeAllItems();
             txtProduto.setText("");
             txtEmbalagem.setText("");
+            jcbNao.setSelected(true);
+            jcbSim.setSelected(false);
             txtQtde.setText("");
-            txtNf.setText("");
+            txtData.setText("");
         }
     }
 
     public void excluirDados() {
         if (0 == JOptionPane.showConfirmDialog(rootPane, "Deseja excluir essas informações?", "Excluir", JOptionPane.YES_NO_OPTION)) {
-            if (new ArmazenagemController().excluirCadastroArmazanagem(idProduto)) {
+            if (new DevolucaoController().excluirCadastroDevolucao(idDevolucao)) {
                 limparCampos(false);
             }
         }
     }
 
-    public void recebeDados(int a, int b, String c) {
-        idProduto = a;        //a idPessoa       
-        if (pc == null) {
-            pc = new ProdutoController();
+    private void gravarDados() {
+        if (devolucao == null) {
+            devolucao = new DevolucaoEmbalagem();
         }
-        txtEmbalagem.setText(pc.buscarEmbalagem(b));
-        txtProduto.setText(c);
-    }
+        if (dv == null) {
+            dv = new DevolucaoController();
+        }
+        devolucao.setIdDevolucao();
+        devolucao.setFlagDevolucao('T');
+        devolucao.setDataEntrega(txtData.getText());
 
-}
-/*private void gravarDados() {
-        if (pessoa == null) {
-            pessoa = new Pessoa();
-        }
-        pessoa.setIdPessoa(idPessoa);
-        pessoa.setIdCidade(idCidade);
-        pessoa.setNome(txtNome.getText());
-        pessoa.setCpf(txtCPF.getText());
-        pessoa.setRg(txtRG.getText());
-        pessoa.setEndereco(txtEndereco.getText());
-        pessoa.setNumero(Integer.parseInt(txtNumero.getText()));
-        pessoa.setBairro(txtBairro.getText());
-        pessoa.setComplemento(txtComplemento.getText());
-        pessoa.setCep(txtCEP.getText());
-        pessoa.setTelfixo(txtTelFixo.getText());
-        pessoa.setTelcell(txtTelCell.getText());
-        if (jcbSexo.getSelectedIndex() == 1) {
-            pessoa.setSexo('M');
-        } else {
-            pessoa.setSexo('F');
-        }
-        pessoa.setEmail(txtEmail.getText());
-
-        PessoaController pessoaController = new PessoaController();
-        if (pessoaController.insereCadastroPessoa(pessoa)) {
+        if (dv.insereCadastroDevolucao(devolucao)) {
             JOptionPane.showMessageDialog(this, "Cadastro Gravadao com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
             limparCampos(false);
         } else {
@@ -405,18 +385,45 @@ public class Armazenagem extends javax.swing.JInternalFrame {
         }
     }
 
-    private void carregaEstado() {
-        listaEstado = new EstadoController().buscaCadastroEstado();
-        for (Estado e : listaEstado) {
-            jcbEstado.addItem(e.getSigla());
+    public void dadosPesquisProduto(int a, int b, String c, String d) {
+        idProduto = a;
+        if (pc == null) {
+            pc = new ProdutoController();
+        }
+        txtEmbalagem.setText(pc.buscarEmbalagem(b));
+        txtProduto.setText(c);
+        txtClasseTox.setText(d);
+        txtData.grabFocus();
+    }
+
+}
+    
+
+    /*
+        devolucao.setIdEmpresa(ec.buscaIdNomEmpresa(jcbEmpresa.getSelectedItem().toString())); //combobox
+        devolucao.setIdPessoa(pec.buscaIdNomePessoa(jcbPessoa.getSelectedItem().toString())); //combobox
+
+    
+
+    
+
+    private void carregaNomePessoa() {
+        if (pec == null) {
+            pec = new PessoaController();
+        }
+        listaPessoa = pec.buscaCadastroPessoa();
+        for (Pessoa p : listaPessoa) {
+            jcbPessoa.addItem(p.getNome());
         }
     }
 
-    private void carregaCidade() {
-        String estado = (String) jcbEstado.getSelectedItem();
-        listaCidade = new CidadeController().buscaEstadoCidade(estado);
-        for (Cidade c : listaCidade) {
-            jcbCidade.addItem(String.valueOf(c.getNome()));
+    private void carregaNomeEmpresa() {
+        if (ec == null) {
+            ec = new EmpresaController();
+        }
+        listaEmpresa = ec.buscaCadastroEmpresa();
+        for (Empresa e : listaEmpresa) {
+            jcbEmpresa.addItem(e.getNome());
         }
     }
- */
+}

@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * @author j0nas
  */
 public class DevolucaoController {
-    
+
     DevolucaoDao devolucaoDao;
 
     public DevolucaoController() {
@@ -39,12 +39,7 @@ public class DevolucaoController {
         return devolucaoDao.excluirCadastroDevolucao(id);
     }
 
-    /*
-    public ArrayList<Cidade> buscaEstadoCidade(String estado) {
-        return cidadeDao.buscaEstadoCidade(estado);
+    public boolean atualizaDevolucao(Devolucao devolucao) {
+            return devolucaoDao.updateDevolucao(devolucao);
     }
-
-    public String buscarCidade(int idCidade) {
-        return cidadeDao.buscarCidade(idCidade);
-    }*/
 }

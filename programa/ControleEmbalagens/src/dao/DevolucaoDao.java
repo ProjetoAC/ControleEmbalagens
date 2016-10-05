@@ -22,15 +22,17 @@ public class DevolucaoDao {
 
     Statement st;
     PreparedStatement prepst;
-//idDevolucao, idempresa, iddevolucao, idpessoa, data, quantidade,  flagentrega, dataentrega
+
     static String INSERT = "INSERT INTO devolucao(idDevolucao, idEmpresa, idPessoa, idProduto, "
-            + "data, quantidade,  flagentrega, dataentrega) "
-            + "VALUES ((SELECT COALESCE(max(idDevolucao)+1,1) FROM devolucao),?,?,?,?,?,?,?);";
+            + "data, quantidade) "//,  flagentrega, dataentrega) "
+            + "VALUES ((SELECT COALESCE(max(idDevolucao)+1,1) FROM devolucao),?,?,?,?,?);";
     static String SELECTALL = "SELECT idDevolucao, idempresa, iddevolucao, idpessoa, data, "
             + "quantidade,  flagentrega, dataentrega FROM devolucao order by idDevolucao;";
     static String UPDATE = "UPDATE devolucao SET idDevolucao = ?, idempresa = ?, iddevolucao = ?, "
             + "idpessoa = ?, data = ?, quantidade = ?,  flagentrega = ?, dataentrega = ? "
             + "WHERE idDevolucao = ? ;";
+    static String UPDATEDEVOLUCAO = "UPDATE devolucao SET idDevolucao = ?, flagentrega = ?, dataentrega = ? "
+            + "WHERE idDevolucao = ?;";
     static String DELETE = "DELETE FROM devolucao  WHERE idDevolucao = ?;";
 
     public boolean insereCadastroDevolucao(Devolucao devolucao) {
@@ -43,9 +45,9 @@ public class DevolucaoDao {
             preparedStatement.setInt(3, devolucao.getIdProduto());
             preparedStatement.setString(4, devolucao.getData());
             preparedStatement.setInt(5, devolucao.getQuantidade());
-            preparedStatement.setString(6, String.valueOf(devolucao.getFlagDevolucao()));//flagDevolucao
-            preparedStatement.setString(7, devolucao.getDataEntrega());//DataEntrega
-            System.out.println(""+ preparedStatement.toString());
+            //preparedStatement.setString(6, String.valueOf(devolucao.getFlagDevolucao()));//flagDevolucao
+            //preparedStatement.setString(7, devolucao.getDataEntrega());//DataEntrega
+            System.out.println("" + preparedStatement.toString());
             preparedStatement.execute();
             return true;
         } catch (SQLException ex) {
@@ -109,6 +111,21 @@ public class DevolucaoDao {
             return true;
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Problema ao deletar o cadastro devolucao:" + ex);
+        }
+        return false;
+    }
+
+    public boolean updateDevolucao(Devolucao devolucao) {
+        try {
+
+            PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(UPDATEDEVOLUCAO);
+            preparedStatement.setInt(1, devolucao.getIdDevolucao());
+            preparedStatement.setString(2, String.valueOf(devolucao.getFlagDevolucao()));//flagDevolucao
+            preparedStatement.setString(3, devolucao.getDataEntrega());//DataEntrega
+            preparedStatement.execute();
+            return true;
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Problema ao fazer update do update do cadastro de devolucao:" + ex);
         }
         return false;
     }
