@@ -6,9 +6,15 @@
 package View;
 
 import Model.Devolucao;
+import Model.Empresa;
+import Model.Pessoa;
 import controller.DevolucaoController;
+import controller.EmpresaController;
+import controller.PessoaController;
 import controller.ProdutoController;
 import java.awt.Container;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 /**
@@ -18,8 +24,11 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
 
     ProdutoController pc;
-    DevolucaoController dv;
-    Devolucao devolucao;
+    DevolucaoController dc;
+    PessoaController pec;
+    EmpresaController ec;
+    Devolucao d;
+    int idDevolucao;
 
     public DevolucaoEmbalagem() {
         initComponents();
@@ -29,7 +38,8 @@ public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
     }
 
     Principal telaPrincipal;
-    PesquisaProdDev telaPesqProduto;
+    DevEmbPesq telaPesqProdutoDev;
+    DevEmbPesqProd telaPesqProduto;
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -41,8 +51,6 @@ public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
         jcbSim = new javax.swing.JCheckBox();
         jcbNao = new javax.swing.JCheckBox();
         jLabel2 = new javax.swing.JLabel();
-        txtQtde = new javax.swing.JFormattedTextField();
-        jLabel6 = new javax.swing.JLabel();
         txtData = new javax.swing.JFormattedTextField();
         txtProduto = new javax.swing.JTextField();
         btnPesqP = new javax.swing.JButton();
@@ -66,10 +74,6 @@ public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
         jcbNao.setText("Não");
 
         jLabel2.setText("Data Devolução:");
-
-        txtQtde.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
-
-        jLabel6.setText("Quantidade:");
 
         try {
             txtData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
@@ -119,12 +123,8 @@ public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtQtde, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 91, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -146,14 +146,10 @@ public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
                     .addComponent(jcbSim)
                     .addComponent(jcbNao))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel6)
-                        .addComponent(txtQtde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         btnGravar.setText("Gravar");
@@ -266,7 +262,7 @@ public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
 
     private void btnPesqPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesqPActionPerformed
         if (telaPesqProduto == null) {
-            telaPesqProduto = new PesquisaProdDev();
+            telaPesqProduto = new DevEmbPesqProd();
         }
         Principal.jdpPrincipal.add(telaPesqProduto);
         telaPesqProduto.setVisible(true);
@@ -287,7 +283,13 @@ public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void btnPesqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesqActionPerformed
-
+        if (telaPesqProdutoDev == null) {
+            telaPesqProdutoDev = new DevEmbPesq();
+        }
+        Principal.jdpPrincipal.add(telaPesqProdutoDev);
+        telaPesqProdutoDev.setVisible(true);
+        telaPrincipal.centralizaForm(telaPesqProdutoDev);
+        this.dispose();
     }//GEN-LAST:event_btnPesqActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
@@ -305,7 +307,6 @@ public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -315,7 +316,6 @@ public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
     private javax.swing.JFormattedTextField txtData;
     private javax.swing.JTextField txtEmbalagem;
     private javax.swing.JTextField txtProduto;
-    private javax.swing.JFormattedTextField txtQtde;
     // End of variables declaration//GEN-END:variables
 
     private void desativaBotao() {
@@ -325,15 +325,6 @@ public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
         norteh.remove(0);
         norteh.validate();
         norteh.repaint();
-    }
-
-    public void dadosPesquisProduto(int a, int b, String c) {
-        if (pc == null) {
-            pc = new ProdutoController();
-        }
-        txtEmbalagem.setText(pc.buscarEmbalagem(b));
-        txtProduto.setText(c);
-
     }
 
     private void limparCampos(boolean pergunta) {
@@ -352,7 +343,6 @@ public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
             txtEmbalagem.setText("");
             jcbNao.setSelected(true);
             jcbSim.setSelected(false);
-            txtQtde.setText("");
             txtData.setText("");
         }
     }
@@ -366,17 +356,31 @@ public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
     }
 
     private void gravarDados() {
-        if (devolucao == null) {
-            devolucao = new DevolucaoEmbalagem();
+        char opcao = ' ';
+        if (d == null) {
+            d = new Devolucao();
         }
-        if (dv == null) {
-            dv = new DevolucaoController();
+        if (dc == null) {
+            dc = new DevolucaoController();
         }
-        devolucao.setIdDevolucao();
-        devolucao.setFlagDevolucao('T');
-        devolucao.setDataEntrega(txtData.getText());
+        if (pec == null) {
+            pec = new PessoaController();
+        }
+        if (ec == null) {
+            ec = new EmpresaController();
+        }
+        if (jcbNao.isSelected()) {
+            JOptionPane.showMessageDialog(null, "Opção selecionada inválida. Favor selecione SIM");
+            jcbSim.grabFocus();
+        } else {
+            opcao = 'T';
+        }
 
-        if (dv.insereCadastroDevolucao(devolucao)) {
+        d.setIdProduto(idDevolucao);
+        d.setFlagDevolucao(opcao);
+        d.setData(txtData.getText());
+
+        if (dc.atualizaDevolucao(d)) {
             JOptionPane.showMessageDialog(this, "Cadastro Gravadao com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
             limparCampos(false);
         } else {
@@ -385,45 +389,32 @@ public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
         }
     }
 
-    public void dadosPesquisProduto(int a, int b, String c, String d) {
-        idProduto = a;
+    public void dadosPesquisaProduto(int a, int b) {
         if (pc == null) {
             pc = new ProdutoController();
         }
+        idDevolucao = a;
+        txtProduto.setText(pc.buscarNomeProduto(b));
         txtEmbalagem.setText(pc.buscarEmbalagem(b));
-        txtProduto.setText(c);
-        txtClasseTox.setText(d);
-        txtData.grabFocus();
     }
 
-}
-    
-
-    /*
-        devolucao.setIdEmpresa(ec.buscaIdNomEmpresa(jcbEmpresa.getSelectedItem().toString())); //combobox
-        devolucao.setIdPessoa(pec.buscaIdNomePessoa(jcbPessoa.getSelectedItem().toString())); //combobox
-
-    
-
-    
-
-    private void carregaNomePessoa() {
-        if (pec == null) {
-            pec = new PessoaController();
+    public void selecionaDadosTabela(int a, int b, char c, String d) {
+        if (pc == null) {
+            pc = new ProdutoController();
         }
-        listaPessoa = pec.buscaCadastroPessoa();
-        for (Pessoa p : listaPessoa) {
-            jcbPessoa.addItem(p.getNome());
+        idDevolucao = a;
+        txtProduto.setText(pc.buscarNomeProduto(b));
+        txtEmbalagem.setText(pc.buscarEmbalagem(b));
+        if (c == 'T') {
+            jcbSim.setSelected(true);
+            jcbNao.setSelected(false);
+        } else if (c == 'F') {
+            jcbSim.setSelected(false);
+            jcbNao.setSelected(true);
+        }else {
+            jcbSim.setSelected(false);
+            jcbNao.setSelected(false);
         }
-    }
-
-    private void carregaNomeEmpresa() {
-        if (ec == null) {
-            ec = new EmpresaController();
-        }
-        listaEmpresa = ec.buscaCadastroEmpresa();
-        for (Empresa e : listaEmpresa) {
-            jcbEmpresa.addItem(e.getNome());
-        }
+        txtData.setText(d);
     }
 }

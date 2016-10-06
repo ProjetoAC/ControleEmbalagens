@@ -31,7 +31,7 @@ public class ProdutoDao {
     static String DELETE = "DELETE FROM produtos  WHERE idProduto = ?;";
     static String SELECTbuscaEmbalagem = "SELECT a.descricao FROM produtos INNER JOIN embalagens a "
             + "USING (idEmbalagem) WHERE idembalagem =?;";
-    static String SELECTbuscaNomeProduto = "SELECT p.nome FROM devolucao INNER JOIN produtos a "
+    static String SELECTbuscaNomeProduto = "SELECT p.nome FROM devolucao INNER JOIN produtos p "
             + "USING (idProduto) WHERE idProduto = ?;";
 
     public boolean insereCadastroProduto(Produto produto) {

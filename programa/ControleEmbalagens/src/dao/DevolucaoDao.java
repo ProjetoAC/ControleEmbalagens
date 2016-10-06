@@ -26,8 +26,8 @@ public class DevolucaoDao {
     static String INSERT = "INSERT INTO devolucao(idDevolucao, idEmpresa, idPessoa, idProduto, "
             + "data, quantidade) "//,  flagentrega, dataentrega) "
             + "VALUES ((SELECT COALESCE(max(idDevolucao)+1,1) FROM devolucao),?,?,?,?,?);";
-    static String SELECTALL = "SELECT idDevolucao, idempresa, iddevolucao, idpessoa, data, "
-            + "quantidade,  flagentrega, dataentrega FROM devolucao order by idDevolucao;";
+    static String SELECTALL = "SELECT idDevolucao, idempresa, idProduto, idpessoa, data, "
+            + "quantidade,  flagEntrega, dataentrega FROM devolucao order by idDevolucao;";
     static String UPDATE = "UPDATE devolucao SET idDevolucao = ?, idempresa = ?, iddevolucao = ?, "
             + "idpessoa = ?, data = ?, quantidade = ?,  flagentrega = ?, dataentrega = ? "
             + "WHERE idDevolucao = ? ;";
@@ -72,7 +72,7 @@ public class DevolucaoDao {
                 devolucao.setIdProduto(rs.getInt("idProduto"));
                 devolucao.setData(rs.getString("data"));
                 devolucao.setQuantidade(rs.getInt("quantidade"));
-                devolucao.setFlagDevolucao(rs.getString("flagDevolucao").charAt(0));
+                devolucao.setFlagDevolucao(rs.getString("flagEntrega").charAt(0));
                 devolucao.setDataEntrega(rs.getString("dataEntrega"));
                 lista.add(devolucao);
             }

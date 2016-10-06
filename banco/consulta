@@ -1,0 +1,3 @@
+SELECT p.nome FROM produtos p
+INNER JOIN devolucao USING (idProduto)
+WHERE nome LIKE 'R%'

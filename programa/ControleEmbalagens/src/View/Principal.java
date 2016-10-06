@@ -31,7 +31,7 @@ public class Principal extends javax.swing.JFrame {
     CadastroEmbalagens telaCadEmbalagem;
     CadastroProdutos telaCadProduto;
     ProdutoUtilizado telaProdUtilizado;
-    DevolucaoEmbalagem telaDevolucao;
+    DevolucaoEmbalagem telaProdDev;
     Sobre telaSobre;
 
     @SuppressWarnings("unchecked")
@@ -290,12 +290,12 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jmiSobreActionPerformed
 
     private void jmiDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiDevolverActionPerformed
-        if (telaDevolucao == null) {
-            telaDevolucao = new DevolucaoEmbalagem();
+        if (telaProdDev == null) {
+            telaProdDev = new DevolucaoEmbalagem();
         }
-        jdpPrincipal.add(telaDevolucao);
-        telaDevolucao.setVisible(true);
-        centralizaForm(telaDevolucao);
+        jdpPrincipal.add(telaProdDev);
+        telaProdDev.setVisible(true);
+        centralizaForm(telaProdDev);
     }//GEN-LAST:event_jmiDevolverActionPerformed
 
     /**

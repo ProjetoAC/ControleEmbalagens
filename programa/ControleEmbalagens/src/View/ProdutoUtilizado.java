@@ -41,8 +41,9 @@ public class ProdutoUtilizado extends javax.swing.JInternalFrame {
     }
 
     Principal telaPrincipal;
-    PesquisaProdUti telaPesqProduto;
-    PesquisaProdDev telaPesqProdDev;
+    ProdUtiPesqProd telaPesqProduto;
+    ProdUtiPesq telaPesqTabela;
+
 
     /*
      PesquisarPessoa telaPesqPessoa;
@@ -119,24 +120,26 @@ public class ProdutoUtilizado extends javax.swing.JInternalFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(txtClasseTox))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtEmbalagem))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtProduto)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnPesqP, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txtClasseTox, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jcbEmpresa, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
@@ -314,7 +317,7 @@ public class ProdutoUtilizado extends javax.swing.JInternalFrame {
 
     private void btnPesqPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesqPActionPerformed
         if (telaPesqProduto == null) {
-            telaPesqProduto = new PesquisaProdUti();
+            telaPesqProduto = new ProdUtiPesqProd();
         }
         Principal.jdpPrincipal.add(telaPesqProduto);
         telaPesqProduto.setVisible(true);
@@ -323,12 +326,12 @@ public class ProdutoUtilizado extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnPesqPActionPerformed
 
     private void btnPesqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesqActionPerformed
-        if (telaPesqProdDev == null) {
-            telaPesqProdDev = new PesquisaProdDev();
+        if (telaPesqTabela == null) {
+            telaPesqTabela = new ProdUtiPesq();
         }
-        Principal.jdpPrincipal.add(telaPesqProdDev);
-        telaPesqProdDev.setVisible(true);
-        telaPrincipal.centralizaForm(telaPesqProdDev);
+        Principal.jdpPrincipal.add(telaPesqTabela);
+        telaPesqTabela.setVisible(true);
+        telaPrincipal.centralizaForm(telaPesqTabela);
         this.dispose();
     }//GEN-LAST:event_btnPesqActionPerformed
 
@@ -456,5 +459,18 @@ public class ProdutoUtilizado extends javax.swing.JInternalFrame {
         for (Empresa e : listaEmpresa) {
             jcbEmpresa.addItem(e.getNome());
         }
+    }
+
+    public void selecionaDadosTabela(int a, int b, int c, int d, int e, String f) {
+        if (pc == null) {
+            pc = new ProdutoController();
+        }
+        idDevolucao = a;
+        jcbPessoa.setSelectedItem(b);
+        jcbEmpresa.setSelectedItem(c);
+        txtProduto.setText(pc.buscarNomeProduto(d));
+        txtEmbalagem.setText(pc.buscarEmbalagem(d));
+        txtQtde.setText(String.valueOf(e));
+        txtData.setText(f);
     }
 }

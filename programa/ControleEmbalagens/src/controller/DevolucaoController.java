@@ -32,7 +32,7 @@ public class DevolucaoController {
     }
 
     public ArrayList<Devolucao> buscaCadastroDevolucao() {
-        return devolucaoDao.buscaCadastroDevolucao();
+         return devolucaoDao.buscaCadastroDevolucao();
     }
 
     public boolean excluirCadastroDevolucao(int id) {
@@ -42,4 +42,5 @@ public class DevolucaoController {
     public boolean atualizaDevolucao(Devolucao devolucao) {
             return devolucaoDao.updateDevolucao(devolucao);
     }
+    
 }

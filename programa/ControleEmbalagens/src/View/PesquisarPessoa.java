@@ -327,12 +327,24 @@ public class PesquisarPessoa extends javax.swing.JInternalFrame {
 
     private void pesquisar() {
         modeloTabela();
+        txtPesquisa.getText();
         for (Pessoa p : listaPessoas) {
             if (p.getNome().toLowerCase().contains(txtPesquisa.getText().toLowerCase())) {
                 insereDadosTabela(p);
             }
         }
     }
+    /*
+        private void filtrar(){
+        setModelo();
+        txtPesquisa.getText();
+        for (Conta c : listaContas){
+            if( c.getDescricao().toLowerCase().contains(txtPesquisa.getText().toLowerCase())){
+                insereDadoModelo(c);
+            }
+        }
+    }
+    */
 
     private void carregaDadosCadastro() {
         int id = getIdPessoaSelecionado();
