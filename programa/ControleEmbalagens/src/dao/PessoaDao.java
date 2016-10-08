@@ -28,6 +28,7 @@ public class PessoaDao {
             + "telefonecelular = ?, email = ?, sexo = ?  WHERE idpessoa = ? ;";
     static String DELETE = "DELETE FROM pessoas  WHERE idpessoa = ?;";
     static String BUSCAIDPESSOA = "SELECT idPessoa FROM pessoas WHERE nome = ?;";
+    static String BUSCAIDCIDADE  = "SELECT idCidade FROM cidades WHERE nome = ?;";
 
     public boolean insereCadastroPessoa(Pessoa pessoa) {
         ResultSet rs;
@@ -47,11 +48,11 @@ public class PessoaDao {
             preparedStatement.setString(11, pessoa.getTelcell());
             preparedStatement.setString(12, pessoa.getEmail());
             preparedStatement.setString(13, String.valueOf(pessoa.getSexo()));
+            System.out.println(""+preparedStatement.toString());
             preparedStatement.execute();
             return true;
         } catch (SQLException ex) {
-            System.out.println("Problema ao inserir Cadastro Pessoa: " + ex);
-            JOptionPane.showMessageDialog(null, "Erro:" + ex);
+            JOptionPane.showMessageDialog(null, "Problema ao inserir Cadastro Pessoa: " + ex);
         }
         return false;
     }
@@ -81,10 +82,8 @@ public class PessoaDao {
                 pessoa.setEmail(rs.getString("email"));
                 lista.add(pessoa);
             }
-
         } catch (Exception ex) {
-            System.out.println("Problema ao carregar cadastro de pessoas : " + ex);
-            JOptionPane.showMessageDialog(null, "Erro:" + ex);
+            JOptionPane.showMessageDialog(null, "Problema ao carregar cadastro de pessoas : " + ex);
         }
         return lista;
     }
@@ -108,12 +107,10 @@ public class PessoaDao {
             preparedStatement.setString(13, pessoa.getEmail());
             preparedStatement.setString(14, String.valueOf(pessoa.getSexo()));
             preparedStatement.setInt(15, pessoa.getIdPessoa());
-//            System.out.println(""+ preparedStatement.toString());
             preparedStatement.execute();
             return true;
         } catch (Exception ex) {
-            System.out.println("Problema ao fazer update do update do cadastro de pessoa: " + ex);
-            JOptionPane.showMessageDialog(null, "Erro:" + ex);
+            JOptionPane.showMessageDialog(null, "Problema ao fazer update do update do cadastro de pessoa: "+ ex);
         }
         return false;
     }
@@ -125,8 +122,7 @@ public class PessoaDao {
             preparedStatement.execute();
             return true;
         } catch (Exception ex) {
-            System.out.println("Problema ao deletar o pessoa do cadastro pessoa: " + ex);
-            JOptionPane.showMessageDialog(null, "Erro:" + ex);
+            JOptionPane.showMessageDialog(null, "Problema ao deletar o pessoa do cadastro pessoa: " + ex);
         }
         return false;
     }
@@ -143,6 +139,22 @@ public class PessoaDao {
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Problema ao carregar idPessoa: " + ex);
+        }
+        return id;
+    }
+
+    public int buscaIdNomeCidade(String nome) {
+        int id = 0;
+
+        try {
+            PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(BUSCAIDCIDADE);
+            preparedStatement.setString(1, nome);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                id = rs.getInt("idCidade");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Problema ao carregar idCidade: " + ex);
         }
         return id;
     }

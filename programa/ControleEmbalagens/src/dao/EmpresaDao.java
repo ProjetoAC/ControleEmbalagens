@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package dao;
 
 import Model.Empresa;
@@ -13,19 +9,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author j0nas
- */
 public class EmpresaDao {
 
     Statement st;
     PreparedStatement prepst;
 
     static String INSERT = "INSERT INTO empresas("
-            + "idEmpresa, idCidadenome, cnpj, endereco, numero, bairro, "
+            + "idEmpresa, idCidade, nome, cnpj, endereco, numero, bairro, "
             + "complemento, cep, telefonefixo, telefonecelular, email) "
-            + "  VALUES ((SELECT COALESCE(max(idempresa)+1,1) FROM empresas),?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+            + "  VALUES ((SELECT COALESCE(max(idempresa)+1,1) FROM empresas),?,?,?,?,?,?,?,?,?,?,?);";
     static String SELECTALL = "SELECT idEmpresa, idCidade, nome, cnpj, endereco, numero, bairro, "
             + "complemento, cep, telefonefixo, telefonecelular, email"
             + " FROM empresas order by nome;";
@@ -34,6 +26,7 @@ public class EmpresaDao {
             + "cep = ?, telefonefixo = ?, telefonecelular = ?, email = ? WHERE idEmpresa = ?;";
     static String DELETE = "DELETE FROM empresas  WHERE idEmpresa = ?;";
     static String BUSCAIDEMPRESA = "SELECT idEmpresa FROM empresas WHERE nome = ?;";
+    static String BUSCAIDCIDADE = "SELECT idCidade FROM cidades WHERE nome = ?;";
 
     public boolean insereCadastroEmpresa(Empresa empresa) {
         ResultSet rs;
@@ -108,7 +101,6 @@ public class EmpresaDao {
             preparedStatement.setString(12, empresa.getTelcell());
             preparedStatement.setString(13, empresa.getEmail());
             preparedStatement.setInt(14, empresa.getIdEmpresa());
-//            System.out.println(""+ preparedStatement.toString());
             preparedStatement.execute();
             return true;
         } catch (Exception ex) {
@@ -143,6 +135,22 @@ public class EmpresaDao {
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Problema ao carregar idEmpresa: " + ex);
+        }
+        return id;
+    }
+
+    public int buscaIdNomeCidade(String nome) {
+        int id = 0;
+
+        try {
+            PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(BUSCAIDCIDADE);
+            preparedStatement.setString(1, nome);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                id = rs.getInt("idCidade");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Problema ao carregar idCidade: " + ex);
         }
         return id;
     }

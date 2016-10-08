@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package View;
 
 import Model.Cidade;
@@ -15,10 +11,6 @@ import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author j0nas
- */
 public class CadastroCidades extends javax.swing.JInternalFrame {
 
     Cidade cidade;
@@ -60,7 +52,11 @@ public class CadastroCidades extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Estado:");
 
-        jcbEstado.setSelectedIndex(-1);
+        txtCidade.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCidadeKeyTyped(evt);
+            }
+        });
 
         jLabel2.setText("Nome:");
 
@@ -213,7 +209,12 @@ public class CadastroCidades extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
-        gravarDados();
+        if (!txtCidade.getText().equals("")) {
+            gravarDados();
+        } else {
+            JOptionPane.showMessageDialog(null, "Dados informados não são válidos!", "AVISO!", JOptionPane.WARNING_MESSAGE);
+            txtCidade.grabFocus();
+        }
     }//GEN-LAST:event_btnGravarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -221,7 +222,7 @@ public class CadastroCidades extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
-        limparCampos(true);
+        limparCampos();
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void tblCidadesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCidadesMouseClicked
@@ -231,6 +232,16 @@ public class CadastroCidades extends javax.swing.JInternalFrame {
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnSairActionPerformed
+
+    private void txtCidadeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCidadeKeyTyped
+        String validar = "1234567890.,;-/?*&$%#@";
+        if (validar.contains(evt.getKeyChar() + "")) {
+            evt.consume();
+        }
+        if (evt.getKeyChar() == 10) {
+            jcbEstado.grabFocus();
+        }
+    }//GEN-LAST:event_txtCidadeKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -275,19 +286,12 @@ public class CadastroCidades extends javax.swing.JInternalFrame {
         tblCidades.getColumnModel().getColumn(2).setPreferredWidth(60);//SiglaEstado
     }
 
-    private void limparCampos(boolean pergunta) {
-        boolean limpar = true;
-        if (pergunta) {
-            if (0 == JOptionPane.showConfirmDialog(rootPane, "Deseja Limpar os dados?", "Limpar Campos", JOptionPane.YES_NO_OPTION)) {
-                txtCidade.setText("");
-                jcbEstado.removeAllItems();
-                carregaEstado();
-                exibirDadosCadastros();
-                limpar = true;
-            } else {
-                limpar = false;
-            }
-        }
+    private void limparCampos() {
+        txtCidade.setText("");
+        jcbEstado.removeAllItems();
+        txtCidade.grabFocus();
+        carregaEstado();
+        exibirDadosCadastros();
     }
 
     private void insereDadosTabela(Cidade cidade) {
@@ -299,13 +303,11 @@ public class CadastroCidades extends javax.swing.JInternalFrame {
     }
 
     private int getIdCidadeSelecionado() {
-        int retorno = 0;
-        retorno = Integer.parseInt(modeloTabela.getValueAt(tblCidades.getSelectedRow(), 0).toString());
-        //return Integer.parseInt(modeloTabela.getValueAt(tblCidades.getSelectedRow(), 0).toString());
-        return retorno;
+        return Integer.parseInt(modeloTabela.getValueAt(tblCidades.getSelectedRow(), 0).toString());
     }
 
     public void exibirDadosCadastros() {
+        modeloTabela.getDataVector().removeAllElements();
         modeloTabela();
         ArrayList<Cidade> lista;
         if (cc == null) {
@@ -340,17 +342,17 @@ public class CadastroCidades extends javax.swing.JInternalFrame {
         if (cidade == null) {
             cidade = new Cidade();
         }
-
+        if (cc == null) {
+            cc = new CidadeController();
+        }
         cidade.setNome(txtCidade.getText());
-        cidade.setIdEstado(getIdEstado());
-
-        cc = new CidadeController();
+        cidade.setIdEstado(buscaIdEstado());
         if (cc.insereCadastroCidade(cidade)) {
             JOptionPane.showMessageDialog(this, "Cadastro Gravadao com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
-            limparCampos(true);
+            limparCampos();
         } else {
             JOptionPane.showMessageDialog(this, "Problema ao gravar dados", "Erro", JOptionPane.ERROR_MESSAGE);
-            limparCampos(false);
+            txtCidade.grabFocus();
         }
         exibirDadosCadastros();
     }
@@ -361,7 +363,7 @@ public class CadastroCidades extends javax.swing.JInternalFrame {
                 cc = new CidadeController();
             }
             cc.excluirCadastroCidade(getIdCidadeSelecionado());
-            limparCampos(true);
+            limparCampos();
             exibirDadosCadastros();
         }
     }
@@ -373,8 +375,6 @@ public class CadastroCidades extends javax.swing.JInternalFrame {
         }
         return sigla = ec.buscarSiglaEstado(idCidade);
     }
-    
-   
 
     private void carregaEstado() {
         listaEstado = new EstadoController().buscaCadastroEstado();
@@ -383,9 +383,9 @@ public class CadastroCidades extends javax.swing.JInternalFrame {
         }
     }
 
-    private int getIdEstado() {
+    private int buscaIdEstado() {
         for (Estado e : listaEstado) {
-            if (jcbEstado.getSelectedItem() == e.getNome()) {
+            if (jcbEstado.getSelectedItem() == e.getSigla()) {
                 idEstado = e.getIdEstado();
             }
         }

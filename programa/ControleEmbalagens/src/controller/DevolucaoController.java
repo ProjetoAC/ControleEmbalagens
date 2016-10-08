@@ -1,18 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package controller;
 
 import Model.Devolucao;
 import dao.DevolucaoDao;
 import java.util.ArrayList;
 
-/**
- *
- * @author j0nas
- */
 public class DevolucaoController {
 
     DevolucaoDao devolucaoDao;

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package dao;
 
 import Model.Devolucao;
@@ -14,17 +10,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author j0nas
- */
+
 public class DevolucaoDao {
 
     Statement st;
     PreparedStatement prepst;
 
     static String INSERT = "INSERT INTO devolucao(idDevolucao, idEmpresa, idPessoa, idProduto, "
-            + "data, quantidade) "//,  flagentrega, dataentrega) "
+            + "data, quantidade) "
             + "VALUES ((SELECT COALESCE(max(idDevolucao)+1,1) FROM devolucao),?,?,?,?,?);";
     static String SELECTALL = "SELECT idDevolucao, idempresa, idProduto, idpessoa, data, "
             + "quantidade,  flagEntrega, dataentrega FROM devolucao order by idDevolucao;";
@@ -45,14 +38,10 @@ public class DevolucaoDao {
             preparedStatement.setInt(3, devolucao.getIdProduto());
             preparedStatement.setString(4, devolucao.getData());
             preparedStatement.setInt(5, devolucao.getQuantidade());
-            //preparedStatement.setString(6, String.valueOf(devolucao.getFlagDevolucao()));//flagDevolucao
-            //preparedStatement.setString(7, devolucao.getDataEntrega());//DataEntrega
-            System.out.println("" + preparedStatement.toString());
             preparedStatement.execute();
             return true;
         } catch (SQLException ex) {
-            System.out.println("Problema ao inserir Cadastro Devolucao: " + ex);
-            JOptionPane.showMessageDialog(null, "Erro:" + ex);
+            JOptionPane.showMessageDialog(null, "Problema ao inserir Cadastro Devolucao: " + ex);
         }
         return false;
     }
@@ -63,7 +52,6 @@ public class DevolucaoDao {
         try {
             PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(SELECTALL);
             ResultSet rs = preparedStatement.executeQuery();
-
             while (rs.next()) {
                 Devolucao devolucao = new Devolucao();
                 devolucao.setIdDevolucao(rs.getInt("idDevolucao"));
@@ -76,7 +64,6 @@ public class DevolucaoDao {
                 devolucao.setDataEntrega(rs.getString("dataEntrega"));
                 lista.add(devolucao);
             }
-
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Problema ao carregar cadastro de devolucao :" + ex);
         }

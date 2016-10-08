@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package dao;
 
 import Model.Cidade;
@@ -13,29 +9,22 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author j0nas
- */
 public class CidadeDao {
 
     Statement st;
     PreparedStatement prepst;
 
-    static String INSERT = "INSERT INTO cidades(idCidade, idEstado, nome "
+    static String INSERT = "INSERT INTO cidades(idCidade, idEstado, nome) "
             + "VALUES ((SELECT COALESCE(max(idcidade)+1,1) FROM cidades),?,?);";
     static String SELECTALL = "SELECT idCidade, idEstado, nome"
-            + " FROM cidades order by idCidade;";
+            + " FROM cidades order by nome;";
     static String UPDATE = "UPDATE cidades SET idCidade = ?, idEstado = ?, nome = ? "
             + "WHERE idCidade = ? ;";
     static String DELETE = "DELETE FROM cidades  WHERE idCidade = ?;";
-
-    static String SELECTestadoCidade = "SELECT a.nome FROM cidades a "
+    static String SELECTESTADOCIDADE = "SELECT a.nome FROM cidades a "
             + " INNER JOIN estados USING (idEstado) where estados.sigla = ?;";
+    static String SELECBUSCACIDADE = "SELECT nome FROM cidades WHERE idCidade = ?;";
 
-    static String SELECbuscaCidade = "SELECT nome FROM cidades WHERE idCidade = ?;";
-
-    //select a.nome, b.sigla from cidades a inner join estados b using (idEstado) where idCidade = 53
     public boolean insereCadastroCidade(Cidade cidade) {
         ResultSet rs;
         int id = 0;
@@ -46,8 +35,7 @@ public class CidadeDao {
             preparedStatement.execute();
             return true;
         } catch (SQLException ex) {
-            System.out.println("Problema ao inserir Cadastro Cidade: " + ex);
-            JOptionPane.showMessageDialog(null, "Erro:" + ex);
+            JOptionPane.showMessageDialog(null, "Problema ao inserir Cadastro Cidade: " + ex);
         }
         return false;
     }
@@ -68,8 +56,7 @@ public class CidadeDao {
             }
 
         } catch (Exception ex) {
-            System.out.println("Problema ao carregar cadastro de cidades : " + ex);
-            JOptionPane.showMessageDialog(null, "Erro:" + ex);
+            JOptionPane.showMessageDialog(null, "Problema ao carregar cadastro de cidades :" + ex);
         }
         return lista;
     }
@@ -82,12 +69,10 @@ public class CidadeDao {
             preparedStatement.setInt(2, cidade.getIdEstado());
             preparedStatement.setString(3, cidade.getNome());
             preparedStatement.setInt(4, cidade.getIdCidade());
-//            System.out.println(""+ preparedStatement.toString());
             preparedStatement.execute();
             return true;
         } catch (Exception ex) {
-            System.out.println("Problema ao fazer update do update do cadastro de cidade: " + ex);
-            JOptionPane.showMessageDialog(null, "Erro:" + ex);
+            JOptionPane.showMessageDialog(null, "Problema ao fazer update do update do cadastro de cidade: " + ex);
         }
         return false;
     }
@@ -99,8 +84,7 @@ public class CidadeDao {
             preparedStatement.execute();
             return true;
         } catch (Exception ex) {
-            System.out.println("Problema ao deletar o cidade do cadastro cidade: " + ex);
-            JOptionPane.showMessageDialog(null, "Erro:" + ex);
+            JOptionPane.showMessageDialog(null, "Problema ao deletar o cidade do cadastro cidade: " + ex);
         }
         return false;
     }
@@ -109,9 +93,8 @@ public class CidadeDao {
         ArrayList<Cidade> lista = new ArrayList<Cidade>();
 
         try {
-            PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(SELECTestadoCidade);
+            PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(SELECTESTADOCIDADE);
             preparedStatement.setString(1, estado);
-            //System.out.println("" + preparedStatement.toString());
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
@@ -121,8 +104,7 @@ public class CidadeDao {
             }
 
         } catch (Exception ex) {
-            System.out.println("Problema ao carregar cadastro de cidades : " + ex);
-            JOptionPane.showMessageDialog(null, "Erro:" + ex);
+            JOptionPane.showMessageDialog(null, "Problema ao carregar cadastro de cidades: " + ex);
         }
         return lista;
     }
@@ -130,9 +112,8 @@ public class CidadeDao {
     public String buscarCidade(int idCidade) {
         String cidade = "";
         try {
-            PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(SELECbuscaCidade);
+            PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(SELECBUSCACIDADE);
             preparedStatement.setInt(1, idCidade);
-            //System.out.println("" + preparedStatement.toString());
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
@@ -140,8 +121,7 @@ public class CidadeDao {
             }
 
         } catch (Exception ex) {
-            System.out.println("Problema ao carregar cadastro de cidades : " + ex);
-            JOptionPane.showMessageDialog(null, "Erro:" + ex);
+            JOptionPane.showMessageDialog(null, "Problema ao carregar cadastro de cidades: " + ex);
         }
         return cidade;
     }

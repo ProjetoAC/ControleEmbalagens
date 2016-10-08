@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package View;
 
 import Model.Embalagem;
@@ -17,10 +13,6 @@ import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author j0nas
- */
 public class DevEmbPesq extends javax.swing.JInternalFrame {
 
     DevolucaoController dv;
@@ -179,7 +171,11 @@ public class DevEmbPesq extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtPesquisaKeyReleased
 
     private void btnSelecionaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionaActionPerformed
-        selecionaDadosTabela();
+        if (tblPesqProduto.getSelectedRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Favor selecione uma linha na tabela!", "AVISO!", JOptionPane.WARNING_MESSAGE);
+        } else {
+            selecionaDadosTabela();
+        }
     }//GEN-LAST:event_btnSelecionaActionPerformed
 
     private void btnLimpaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpaActionPerformed
@@ -263,10 +259,7 @@ public class DevEmbPesq extends javax.swing.JInternalFrame {
     }
 
     private int getIdDevolucaoSelecionado() {
-        int retorno = 0;
-        retorno = Integer.parseInt(modeloTabela.getValueAt(tblPesqProduto.getSelectedRow(), 0).toString());
-        //return Integer.parseInt(modeloTabela.getValueAt(tblProdutos.getSelectedRow(), 0).toString());
-        return retorno;
+        return Integer.parseInt(modeloTabela.getValueAt(tblPesqProduto.getSelectedRow(), 0).toString());
     }
 
     public void exibirDadosCadastros() {
@@ -294,7 +287,6 @@ public class DevEmbPesq extends javax.swing.JInternalFrame {
 
     private void pesquisar() {
         modeloTabela();
-
     }
 
     private void selecionaDadosTabela() {

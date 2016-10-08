@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package dao;
 
 import Model.Estado;
@@ -13,10 +9,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author j0nas
- */
 public class EstadoDao {
 
     Statement st;
@@ -25,12 +17,12 @@ public class EstadoDao {
     static String INSERT = "INSERT INTO estados(idEstado, nome, sigla) "
             + "VALUES ((SELECT COALESCE(max(idEstado)+1,1) FROM estados),?,?);";
     static String SELECTALL = "SELECT idEstado, nome, sigla "
-            + "FROM estados order by idEstado;";
+            + "FROM estados order by nome;";
     static String UPDATE = "UPDATE estados SET idEstado = ?, nome = ?, sigla = ? "
             + "WHERE idEstado = ? ;";
     static String DELETE = "DELETE FROM estados  WHERE idEstado = ?;";
     
-    static String SELECbuscaSigla = "SELECT sigla FROM estados "
+    static String SELECTBUSCASIGLA = "SELECT sigla FROM estados "
             + "INNER JOIN cidades USING (idEstado) WHERE idCidade = ?;";
 
     public boolean insereCadastroEstado(Estado estado) {
@@ -62,7 +54,6 @@ public class EstadoDao {
                 estado.setSigla(rs.getString("sigla"));
                 lista.add(estado);
             }
-
         } catch (Exception ex) {
             System.out.println("Problema ao carregar cadastro de estados : " + ex);
             JOptionPane.showMessageDialog(null, "Erro:" + ex);
@@ -78,7 +69,6 @@ public class EstadoDao {
             preparedStatement.setString(2, estado.getNome());
             preparedStatement.setString(3, estado.getSigla());
             preparedStatement.setInt(4, estado.getIdEstado());
-            //System.out.println(""+ preparedStatement.toString());
             preparedStatement.execute();
             return true;
         } catch (Exception ex) {
@@ -102,11 +92,9 @@ public class EstadoDao {
     public String buscarSiglaEstado(int idCidade) {
         String sigla = "";
         try {
-            PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(SELECbuscaSigla);
+            PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(SELECTBUSCASIGLA);
             preparedStatement.setInt(1, idCidade);
-            //System.out.println("" + preparedStatement.toString());
             ResultSet rs = preparedStatement.executeQuery();
-
             while (rs.next()) {
                 sigla = rs.getString("sigla");
             }

@@ -1,18 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package controller;
 
 import Model.Empresa;
 import dao.EmpresaDao;
 import java.util.ArrayList;
 
-/**
- *
- * @author j0nas
- */
 public class EmpresaController {
 
     EmpresaDao empresaDao;
@@ -41,5 +33,9 @@ public class EmpresaController {
 
     public int buscaIdNomEmpresa(String nome) {
         return empresaDao.buscaIdNomeEmpresa(nome);
+    }
+
+    public int buscaIdNomeCidade(String nome) {
+        return empresaDao.buscaIdNomeCidade(nome);
     }
 }

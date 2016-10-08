@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package dao;
 
 import Model.Embalagem;
@@ -13,10 +9,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author j0nas
- */
 public class EmbalagemDao {
 
     Statement st;
@@ -27,7 +19,7 @@ public class EmbalagemDao {
     static String SELECTALL = "SELECT idEmbalagem, descricao FROM embalagens order by idEmbalagem;";
     static String UPDATE = "UPDATE embalagens SET idEmbalagem = ?, descricao = ? WHERE idEmbalagem = ? ;";
     static String DELETE = "DELETE FROM embalagens  WHERE idEmbalagem = ?;";
-    static String SELECTbuscaEmbalagem = "SELECT descricao FROM embalagens WHERE idEmbalagem = ?;";
+    static String SELECTBUSCAEMBALAGEM = "SELECT descricao FROM embalagens WHERE idEmbalagem = ?;";
 
     public boolean insereCadastroEmbalagem(Embalagem embalagem) {
         ResultSet rs;
@@ -93,7 +85,7 @@ public class EmbalagemDao {
     public String buscarEmbalagem(int idEmbalagem) {
         String embalagem = "";
         try {
-            PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(SELECTbuscaEmbalagem);
+            PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(SELECTBUSCAEMBALAGEM);
             preparedStatement.setInt(1, idEmbalagem);
             ResultSet rs = preparedStatement.executeQuery();
 
