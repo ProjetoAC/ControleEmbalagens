@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View;
 
 import Model.Devolucao;
@@ -17,10 +12,6 @@ import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author j0nas
- */
 public class ProdUtiPesq extends javax.swing.JInternalFrame {
 
     DevolucaoController dv;
@@ -40,9 +31,9 @@ public class ProdUtiPesq extends javax.swing.JInternalFrame {
         exibirDadosCadastros();
     }
 
-   Principal telaPrincipal;
-   ProdutoUtilizado enviaDadosTabela;
-    
+    Principal telaPrincipal;
+    ProdutoUtilizado enviaDadosTabela;
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -179,11 +170,15 @@ public class ProdUtiPesq extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtPesquisaKeyReleased
 
     private void btnSelecionaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionaActionPerformed
-        selecionaDadosTabela();
+        if (tblPesqProduto.getSelectedRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Favor selecione uma linha na tabela!", "AVISO!", JOptionPane.WARNING_MESSAGE);
+        } else {
+            selecionaDadosTabela();
+        }
     }//GEN-LAST:event_btnSelecionaActionPerformed
 
     private void btnLimpaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpaActionPerformed
-        limparPesquisa(true);
+        limparPesquisa();
     }//GEN-LAST:event_btnLimpaActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
@@ -237,17 +232,9 @@ public class ProdUtiPesq extends javax.swing.JInternalFrame {
         tblPesqProduto.getColumnModel().getColumn(5).setPreferredWidth(130);
     }
 
-    private void limparPesquisa(boolean pergunta) {
-        boolean limpar = true;
-        if (pergunta) {
-            if (0 == JOptionPane.showConfirmDialog(rootPane, "Deseja Limpar os dados?", "Limpar Campos", JOptionPane.YES_NO_OPTION)) {
-                txtPesquisa.setText("");
-                exibirDadosCadastros();
-                limpar = true;
-            } else {
-                limpar = false;
-            }
-        }
+    private void limparPesquisa() {
+        txtPesquisa.setText("");
+        exibirDadosCadastros();
     }
 
     private void insereDadosTabela(Devolucao devolucao) {
@@ -263,13 +250,11 @@ public class ProdUtiPesq extends javax.swing.JInternalFrame {
     }
 
     private int getIdDevolucaoSelecionado() {
-        int retorno = 0;
-        retorno = Integer.parseInt(modeloTabela.getValueAt(tblPesqProduto.getSelectedRow(), 0).toString());
-        //return Integer.parseInt(modeloTabela.getValueAt(tblProdutos.getSelectedRow(), 0).toString());
-        return retorno;
+        return Integer.parseInt(modeloTabela.getValueAt(tblPesqProduto.getSelectedRow(), 0).toString());
     }
 
     public void exibirDadosCadastros() {
+        modeloTabela.getDataVector().removeAllElements();
         modeloTabela();
         ArrayList<Devolucao> lista;
         if (dv == null) {
@@ -294,21 +279,18 @@ public class ProdUtiPesq extends javax.swing.JInternalFrame {
 
     private void pesquisar() {
         modeloTabela();
-
     }
 
     private void selecionaDadosTabela() {
         int id = getIdDevolucaoSelecionado();
-        int a = 0, b = 0, c = 0, d = 0, e = 0;
-        String f = "";
+        int a = 0, b = 0, c = 0;
+        String d = "";
         for (Devolucao dev : listaDevolucao) {
             if (dev.getIdDevolucao() == id) {
                 a = dev.getIdDevolucao();
-                b = dev.getIdPessoa();
-                c = dev.getIdEmpresa();
-                d = dev.getIdProduto();
-                e = dev.getQuantidade();
-                f = dev.getData();
+                b = dev.getIdProduto();
+                c = dev.getQuantidade();
+                d = dev.getData();
                 break;
             }
         }
@@ -318,7 +300,7 @@ public class ProdUtiPesq extends javax.swing.JInternalFrame {
         Principal.jdpPrincipal.add(enviaDadosTabela);
         enviaDadosTabela.setVisible(true);
         telaPrincipal.centralizaForm(enviaDadosTabela);
-        enviaDadosTabela.selecionaDadosTabela(a, b, c, d, e, f);
+        enviaDadosTabela.selecionaDadosTabela(a, b, c, d);
         this.dispose();
     }
 

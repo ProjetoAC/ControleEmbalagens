@@ -263,6 +263,7 @@ public class DevEmbPesq extends javax.swing.JInternalFrame {
     }
 
     public void exibirDadosCadastros() {
+        modeloTabela.getDataVector().removeAllElements();
         modeloTabela();
         ArrayList<Devolucao> lista;
         if (dv == null) {

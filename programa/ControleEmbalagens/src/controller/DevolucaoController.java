@@ -1,4 +1,3 @@
-
 package controller;
 
 import Model.Devolucao;
@@ -24,7 +23,7 @@ public class DevolucaoController {
     }
 
     public ArrayList<Devolucao> buscaCadastroDevolucao() {
-         return devolucaoDao.buscaCadastroDevolucao();
+        return devolucaoDao.buscaCadastroDevolucao();
     }
 
     public boolean excluirCadastroDevolucao(int id) {
@@ -32,7 +31,27 @@ public class DevolucaoController {
     }
 
     public boolean atualizaDevolucao(Devolucao devolucao) {
-            return devolucaoDao.updateDevolucao(devolucao);
+        return devolucaoDao.updateDevolucao(devolucao);
     }
-    
+
+    public String buscarNomeEmpresa(int idDevolucao) {
+        return devolucaoDao.buscarNomeEmpresa(idDevolucao);
+    }
+
+    public String buscarDescricaoEmbalagem(int idProduto) {
+        return devolucaoDao.buscarDescricaoEmbalagem(idProduto);
+    }
+
+    public String buscarNomePessoa(int idDevolucao) {
+        return devolucaoDao.buscarNomePessoa(idDevolucao);
+    }
+
+    public String buscarClasseTox(int idDevolucao) {
+        return devolucaoDao.buscarClasseTox(idDevolucao);
+    }
+
+    public String buscarNomeProduto(int idDevolucao) {
+        return devolucaoDao.buscarNomeProduto(idDevolucao);
+    }
+
 }

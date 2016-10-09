@@ -1,26 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View;
 
 import Model.Devolucao;
-import Model.Empresa;
-import Model.Pessoa;
 import controller.DevolucaoController;
 import controller.EmpresaController;
 import controller.PessoaController;
 import controller.ProdutoController;
 import java.awt.Container;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
-/**
- *
- * @author j0nas
- */
 public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
 
     ProdutoController pc;
@@ -34,7 +22,6 @@ public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
         initComponents();
         this.setTitle("Lançamento de Devolução");
         desativaBotao();
-
     }
 
     Principal telaPrincipal;
@@ -279,7 +266,7 @@ public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
-        limparCampos(true);
+        limparCampos();
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void btnPesqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesqActionPerformed
@@ -327,30 +314,19 @@ public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
         norteh.repaint();
     }
 
-    private void limparCampos(boolean pergunta) {
-        boolean limpar = true;
-
-        if (pergunta) {
-            if (0 == JOptionPane.showConfirmDialog(rootPane, "Deseja Limpar os dados?", "Limpar Campos", JOptionPane.YES_NO_OPTION)) {
-                limpar = true;
-            } else {
-                limpar = false;
-            }
-        }
-
-        if (limpar) {
-            txtProduto.setText("");
-            txtEmbalagem.setText("");
-            jcbNao.setSelected(true);
-            jcbSim.setSelected(false);
-            txtData.setText("");
-        }
+    private void limparCampos() {
+        txtProduto.setText("");
+        txtEmbalagem.setText("");
+        jcbNao.setSelected(true);
+        jcbSim.setSelected(false);
+        txtData.setText("");
+        btnPesqP.grabFocus();
     }
 
     public void excluirDados() {
         if (0 == JOptionPane.showConfirmDialog(rootPane, "Deseja excluir essas informações?", "Excluir", JOptionPane.YES_NO_OPTION)) {
             if (new DevolucaoController().excluirCadastroDevolucao(idDevolucao)) {
-                limparCampos(false);
+                limparCampos();
             }
         }
     }
@@ -382,10 +358,10 @@ public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
 
         if (dc.atualizaDevolucao(d)) {
             JOptionPane.showMessageDialog(this, "Cadastro Gravadao com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
-            limparCampos(false);
+            limparCampos();
         } else {
             JOptionPane.showMessageDialog(this, "Problema ao gravar dados", "Erro", JOptionPane.ERROR_MESSAGE);
-            limparCampos(true);
+            txtData.grabFocus();
         }
     }
 
@@ -411,7 +387,7 @@ public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
         } else if (c == 'F') {
             jcbSim.setSelected(false);
             jcbNao.setSelected(true);
-        }else {
+        } else {
             jcbSim.setSelected(false);
             jcbNao.setSelected(false);
         }
