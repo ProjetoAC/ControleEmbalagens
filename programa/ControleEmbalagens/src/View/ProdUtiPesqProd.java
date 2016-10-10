@@ -226,6 +226,7 @@ public class ProdUtiPesqProd extends javax.swing.JInternalFrame {
     private void limparPesquisa() {
         txtPesquisa.setText("");
         exibirDadosCadastros();
+        txtPesquisa.grabFocus();
     }
 
     private void insereDadosTabela(Produto produto) {

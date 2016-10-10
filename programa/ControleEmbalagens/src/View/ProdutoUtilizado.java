@@ -390,6 +390,7 @@ public class ProdutoUtilizado extends javax.swing.JInternalFrame {
         if (ec == null) {
             ec = new EmpresaController();
         }
+        devolucao.setIdDevolucao(idDevolucao);
         devolucao.setIdEmpresa(ec.buscaIdNomEmpresa(jcbEmpresa.getSelectedItem().toString()));
         devolucao.setIdPessoa(pec.buscaIdNomePessoa(jcbPessoa.getSelectedItem().toString()));
         devolucao.setIdProduto(idProduto);
@@ -441,10 +442,11 @@ public class ProdutoUtilizado extends javax.swing.JInternalFrame {
             dv = new DevolucaoController();
         }
         idDevolucao = a;
+        idProduto = b;
         jcbPessoa.setSelectedItem(dv.buscarNomePessoa(a));
         jcbEmpresa.setSelectedItem(dv.buscarNomeEmpresa(a));
         txtProduto.setText(dv.buscarNomeProduto(a));
-        txtEmbalagem.setText(dv.buscarDescricaoEmbalagem(b));
+        txtEmbalagem.setText(dv.buscarDescricaoEmbalagem(idProduto));
         txtClasseTox.setText(dv.buscarClasseTox(a));
         txtQtde.setText(String.valueOf(c));
         txtData.setText(d);

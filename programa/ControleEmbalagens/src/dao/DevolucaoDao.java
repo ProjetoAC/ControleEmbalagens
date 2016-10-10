@@ -18,8 +18,8 @@ public class DevolucaoDao {
             + "VALUES ((SELECT COALESCE(max(idDevolucao)+1,1) FROM devolucao),?,?,?,?,?,?,?);";
     static String SELECTALL = "SELECT idDevolucao, idempresa, idProduto, idpessoa, data, "
             + "quantidade,  flagEntrega, dataentrega FROM devolucao order by idDevolucao;";
-    static String UPDATE = "UPDATE devolucao SET idDevolucao = ?, idempresa = ?, iddevolucao = ?, "
-            + "idpessoa = ?, data = ?, quantidade = ?,  flagentrega = ?, dataentrega = ? "
+    static String UPDATE = "UPDATE devolucao SET idDevolucao = ?, idEmpresa = ?, idPessoa = ?, idProduto = ?, "
+            + "data = ?, quantidade = ?,  flagEntrega = ?, dataEntrega = ? "
             + "WHERE idDevolucao = ? ;";
     static String UPDATEDEVOLUCAO = "UPDATE devolucao SET idDevolucao = ?, flagentrega = ?, dataentrega = ? "
             + "WHERE idDevolucao = ?;";
@@ -34,6 +34,9 @@ public class DevolucaoDao {
             + "WHERE idDevolucao = ?;";
     static String SELECTBUSCANOMEPRODUTO = "SELECT p.nome FROM devolucao INNER JOIN produtos p "
             + "USING (idProduto) WHERE idDevolucao = ?;";
+    static String SELECTPESQUISAPRODUTO = "SELECT iddevolucao, idpessoa, idempresa, idproduto, data, quantidade, "
+            + "flagentrega, dataentrega FROM devolucao INNER JOIN produtos p USING (idProduto) "
+            + "WHERE p.nome like ?";
 
     public boolean insereCadastroDevolucao(Devolucao devolucao) {
         ResultSet rs;
@@ -57,7 +60,6 @@ public class DevolucaoDao {
 
     public ArrayList<Devolucao> buscaCadastroDevolucao() {
         ArrayList<Devolucao> lista = new ArrayList<Devolucao>();
-
         try {
             PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(SELECTALL);
             ResultSet rs = preparedStatement.executeQuery();
@@ -89,8 +91,9 @@ public class DevolucaoDao {
             preparedStatement.setInt(4, devolucao.getIdProduto());
             preparedStatement.setString(5, devolucao.getData());
             preparedStatement.setInt(6, devolucao.getQuantidade());
-            preparedStatement.setString(7, String.valueOf(devolucao.getFlagDevolucao()));
-            preparedStatement.setString(8, devolucao.getDataEntrega());
+            preparedStatement.setString(7, String.valueOf('F'));
+            preparedStatement.setString(8, "");
+            preparedStatement.setInt(9, devolucao.getIdDevolucao());
             preparedStatement.execute();
             return true;
         } catch (Exception ex) {
@@ -202,4 +205,27 @@ public class DevolucaoDao {
         return nome;
     }
 
+    public ArrayList<Devolucao> pesquisaProduto(String nome) {
+        ArrayList<Devolucao> lista = new ArrayList<Devolucao>();
+        try {
+            PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(SELECTPESQUISAPRODUTO);
+            preparedStatement.setString(1, nome + "%");
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                Devolucao devolucao = new Devolucao();
+                devolucao.setIdDevolucao(rs.getInt("idDevolucao"));
+                devolucao.setIdEmpresa(rs.getInt("idEmpresa"));
+                devolucao.setIdPessoa(rs.getInt("idPessoa"));
+                devolucao.setIdProduto(rs.getInt("idProduto"));
+                devolucao.setData(rs.getString("data"));
+                devolucao.setQuantidade(rs.getInt("quantidade"));
+                devolucao.setFlagDevolucao(rs.getString("flagEntrega").charAt(0));
+                devolucao.setDataEntrega(rs.getString("dataEntrega"));
+                lista.add(devolucao);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Problema ao pesquisar nome produto:" + ex);
+        }
+        return lista;
+    }
 }

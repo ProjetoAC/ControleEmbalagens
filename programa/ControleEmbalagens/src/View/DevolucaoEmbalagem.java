@@ -258,7 +258,12 @@ public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnPesqPActionPerformed
 
     private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
-        gravarDados();
+        if (!txtData.getText().equals("") && jcbSim.isSelected()) {
+            gravarDados();
+        } else {
+            JOptionPane.showMessageDialog(null, "Dados informados não são válidos!", "AVISO!", JOptionPane.WARNING_MESSAGE);
+            btnPesqP.grabFocus();
+        }
     }//GEN-LAST:event_btnGravarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -372,6 +377,7 @@ public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
         idDevolucao = a;
         txtProduto.setText(pc.buscarNomeProduto(b));
         txtEmbalagem.setText(pc.buscarEmbalagem(b));
+        jcbSim.grabFocus();
     }
 
     public void selecionaDadosTabela(int a, int b, char c, String d) {
@@ -387,10 +393,7 @@ public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
         } else if (c == 'F') {
             jcbSim.setSelected(false);
             jcbNao.setSelected(true);
-        } else {
-            jcbSim.setSelected(false);
-            jcbNao.setSelected(false);
         }
-        txtData.setText(d);
+        txtData.grabFocus();
     }
 }

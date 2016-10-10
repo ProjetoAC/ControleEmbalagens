@@ -246,7 +246,6 @@ public class ProdUtiPesq extends javax.swing.JInternalFrame {
         dados[4] = devolucao.getFlagDevolucao();
         dados[5] = devolucao.getDataEntrega();
         modeloTabela.addRow(dados);
-
     }
 
     private int getIdDevolucaoSelecionado() {
@@ -278,7 +277,18 @@ public class ProdUtiPesq extends javax.swing.JInternalFrame {
     }
 
     private void pesquisar() {
+        modeloTabela.getDataVector().removeAllElements();
         modeloTabela();
+        ArrayList<Devolucao> lista;
+        if (dv == null) {
+            dv = new DevolucaoController();
+        }
+        lista = dv.pesquisaProduto(txtPesquisa.getText());
+        for (int x = 0; x < lista.size(); x++) {
+            Devolucao dev = lista.get(x);
+            insereDadosTabela(dev);
+        }
+        listaDevolucao = lista;
     }
 
     private void selecionaDadosTabela() {

@@ -1,4 +1,3 @@
-
 package View;
 
 import Model.Embalagem;
@@ -179,7 +178,7 @@ public class DevEmbPesq extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnSelecionaActionPerformed
 
     private void btnLimpaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpaActionPerformed
-        limparPesquisa(true);
+        limparPesquisa();
     }//GEN-LAST:event_btnLimpaActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
@@ -233,17 +232,10 @@ public class DevEmbPesq extends javax.swing.JInternalFrame {
         tblPesqProduto.getColumnModel().getColumn(5).setPreferredWidth(130);
     }
 
-    private void limparPesquisa(boolean pergunta) {
-        boolean limpar = true;
-        if (pergunta) {
-            if (0 == JOptionPane.showConfirmDialog(rootPane, "Deseja Limpar os dados?", "Limpar Campos", JOptionPane.YES_NO_OPTION)) {
-                txtPesquisa.setText("");
-                exibirDadosCadastros();
-                limpar = true;
-            } else {
-                limpar = false;
-            }
-        }
+    private void limparPesquisa() {
+        txtPesquisa.setText("");
+        exibirDadosCadastros();
+        txtPesquisa.grabFocus();
     }
 
     private void insereDadosTabela(Devolucao devolucao) {
@@ -287,7 +279,18 @@ public class DevEmbPesq extends javax.swing.JInternalFrame {
     }
 
     private void pesquisar() {
+        modeloTabela.getDataVector().removeAllElements();
         modeloTabela();
+        ArrayList<Devolucao> lista;
+        if (dv == null) {
+            dv = new DevolucaoController();
+        }
+        lista = dv.pesquisaProduto(txtPesquisa.getText());
+        for (int x = 0; x < lista.size(); x++) {
+            Devolucao dev = lista.get(x);
+            insereDadosTabela(dev);
+        }
+        listaDevolucao = lista;
     }
 
     private void selecionaDadosTabela() {

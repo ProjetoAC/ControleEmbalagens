@@ -177,7 +177,7 @@ public class DevEmbPesqProd extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnSelecionaActionPerformed
 
     private void btnLimpaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpaActionPerformed
-        limparPesquisa(true);
+        limparPesquisa();
     }//GEN-LAST:event_btnLimpaActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
@@ -230,17 +230,10 @@ public class DevEmbPesqProd extends javax.swing.JInternalFrame {
         tblPesqProduto.getColumnModel().getColumn(4).setPreferredWidth(250);
     }
 
-    private void limparPesquisa(boolean pergunta) {
-        boolean limpar = true;
-        if (pergunta) {
-            if (0 == JOptionPane.showConfirmDialog(rootPane, "Deseja Limpar os dados?", "Limpar Campos", JOptionPane.YES_NO_OPTION)) {
-                txtPesquisa.setText("");
-                exibirDadosCadastros();
-                limpar = true;
-            } else {
-                limpar = false;
-            }
-        }
+    private void limparPesquisa() {
+        txtPesquisa.setText("");
+        exibirDadosCadastros();
+        txtPesquisa.grabFocus();
     }
 
     private void insereDadosTabela(Produto produto) {
@@ -251,7 +244,6 @@ public class DevEmbPesqProd extends javax.swing.JInternalFrame {
         dados[3] = produto.getClassetox();
         dados[4] = carregaEmbalagemTabela(produto.getIdEmbalagem());
         modeloTabela.addRow(dados);
-
     }
 
     private int getIdProdutoSelecionado() {
