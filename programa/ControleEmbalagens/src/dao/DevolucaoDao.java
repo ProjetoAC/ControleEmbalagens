@@ -21,8 +21,7 @@ public class DevolucaoDao {
     static String UPDATE = "UPDATE devolucao SET idDevolucao = ?, idEmpresa = ?, idPessoa = ?, idProduto = ?, "
             + "data = ?, quantidade = ?,  flagEntrega = ?, dataEntrega = ? "
             + "WHERE idDevolucao = ? ;";
-    static String UPDATEDEVOLUCAO = "UPDATE devolucao SET idDevolucao = ?, flagentrega = ?, dataentrega = ? "
-            + "WHERE idDevolucao = ?;";
+    static String UPDATEDEVOLUCAO = "UPDATE devolucao SET flagentrega = ?, dataentrega = ? WHERE idDevolucao = ?;";
     static String DELETE = "DELETE FROM devolucao  WHERE idDevolucao = ?;";
     static String SELECTBUSCANOMEEMPRESA = "SELECT e.nome FROM devolucao INNER JOIN empresas e "
             + "USING (idEmpresa) WHERE idDevolucao = ?;";
@@ -83,7 +82,6 @@ public class DevolucaoDao {
 
     public boolean updateCadastroDevolucao(Devolucao devolucao) {
         try {
-
             PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(UPDATE);
             preparedStatement.setInt(1, devolucao.getIdDevolucao());
             preparedStatement.setInt(2, devolucao.getIdEmpresa());
@@ -114,14 +112,17 @@ public class DevolucaoDao {
         return false;
     }
 
-    public boolean updateDevolucao(Devolucao devolucao) {
+    public boolean updateDevolucao(int idDevolucao, char opcao, String data) {
         try {
 
             PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(UPDATEDEVOLUCAO);
-            preparedStatement.setInt(1, devolucao.getIdDevolucao());
-            preparedStatement.setString(2, String.valueOf(devolucao.getFlagDevolucao()));
-            preparedStatement.setString(3, devolucao.getDataEntrega());
-            preparedStatement.setInt(4, devolucao.getIdDevolucao());
+            /*            preparedStatement.setString(1, String.valueOf(devolucao.getFlagDevolucao()));
+            preparedStatement.setString(2, devolucao.getDataEntrega());
+            preparedStatement.setInt(3, devolucao.getIdDevolucao());*/
+            preparedStatement.setString(1, String.valueOf(opcao));
+            preparedStatement.setString(2, data);
+            preparedStatement.setInt(3, idDevolucao);
+            System.out.println("" + preparedStatement.toString());
             preparedStatement.execute();
             return true;
         } catch (Exception ex) {

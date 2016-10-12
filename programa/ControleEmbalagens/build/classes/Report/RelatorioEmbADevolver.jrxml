@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioTipoEmbalagem" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9fe09f79-a282-47d2-9247-1290a73f0fc6">
+	<property name="ireport.zoom" value="1.3310000000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<queryString>
+		<![CDATA[SELECT (SELECT SUM(quantidade) FROM devolucao WHERE flagentrega = 'F') AS qtdTotal, e.descricao, SUM(quantidade) FROM devolucao
+INNER JOIN produtos p USING (idProduto)
+INNER JOIN embalagens e USING (idEmbalagem) 
+WHERE flagentrega = 'F'
+GROUP BY e.descricao]]>
+	</queryString>
+	<field name="qtdtotal" class="java.lang.Long"/>
+	<field name="descricao" class="java.lang.String"/>
+	<field name="sum" class="java.lang.Long"/>
+	<group name="descricao">
+		<groupExpression><![CDATA[$F{descricao}]]></groupExpression>
+		<groupHeader>
+			<band height="26">
+				<textField>
+					<reportElement style="SubTitle" x="30" y="0" width="386" height="24" forecolor="#006600" uuid="659d7528-e22a-4431-92b9-c94bdb7441a3"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="SubTitle" x="483" y="0" width="70" height="20" uuid="ef5b824b-8632-4ed6-a7e5-cbd97574d8d3"/>
+					<textElement>
+						<font size="16" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{sum}]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement mode="Opaque" x="3" y="5" width="19" height="19" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="47613ab9-d2a9-452f-98ec-8e24e31dc48d"/>
+				</rectangle>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="8"/>
+		</groupFooter>
+	</group>
+	<group name="sum">
+		<groupExpression><![CDATA[$F{sum}]]></groupExpression>
+		<groupHeader>
+			<band height="4"/>
+		</groupHeader>
+	</group>
+	<group name="qtdtotal">
+		<groupExpression><![CDATA[$F{qtdtotal}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="0" y="13" width="113" height="33" uuid="d119dea2-c42e-4faa-ba09-39e95a61730f"/>
+				<textElement verticalAlignment="Middle">
+					<font size="24" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Relatório]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="100" y="36" width="274" height="32" uuid="208293dd-3445-497e-aaa4-b1d11fcf9292"/>
+				<textElement>
+					<font size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Embalagens a Devolver]]></text>
+			</staticText>
+			<image>
+				<reportElement x="416" y="0" width="208" height="70" uuid="6dde4d34-4ce9-4e57-aa68-03585c9fab0a"/>
+				<imageExpression><![CDATA["/home/j0nas/MEGA/aprender_e_crescer/ControleEmbalagens/programa/ControleEmbalagens/src/icon/reporttipo.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" uuid="0fd5febc-d7a6-4f7d-8c41-7e6e20f5b081"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="be5c2fc8-fe8d-44aa-82fd-67aec35917b6"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="34" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="ae63bad5-4166-42f2-8b5e-8e3ade2c3d19"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="470" y="13" width="83" height="20" uuid="241d95cc-62f0-47c5-92ed-290138fe06fd"/>
+				<textElement>
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{qtdtotal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="3" y="14" width="156" height="20" uuid="059233c2-c901-460b-8e1e-1afbb376e2e8"/>
+				<textElement>
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[QUANTIDADE TOTAL]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="ae63bad5-4166-42f2-8b5e-8e3ade2c3d19"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement style="Column header" x="433" y="5" width="80" height="20" uuid="940f2296-c743-4c0a-bf50-17f6c5bd5d8a"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="5" width="40" height="20" uuid="a14bd5e2-b724-4fda-82e0-b6df30e8f82d"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="5" width="197" height="20" uuid="5993c4d6-5384-4e72-bcc7-f9ce00e1c04e"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

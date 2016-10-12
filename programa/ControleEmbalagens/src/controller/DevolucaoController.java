@@ -30,8 +30,8 @@ public class DevolucaoController {
         return devolucaoDao.excluirCadastroDevolucao(id);
     }
 
-    public boolean atualizaDevolucao(Devolucao devolucao) {
-        return devolucaoDao.updateDevolucao(devolucao);
+    public boolean atualizaDevolucao(int idDevolucao, char opcao, String data) {
+        return devolucaoDao.updateDevolucao(idDevolucao, opcao, data);
     }
 
     public String buscarNomeEmpresa(int idDevolucao) {

@@ -10,6 +10,9 @@ import javax.swing.JOptionPane;
 import java.awt.Image;
 import java.awt.Graphics;
 import javax.swing.ImageIcon;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import org.apache.lucene.util.WeakIdentityMap;
 
 /**
  *
@@ -163,7 +166,12 @@ public class Principal extends javax.swing.JFrame {
 
         jMenu1.setText("Relatórios");
 
-        jMenuItem1.setText("Quantidade de Embalgens vazias");
+        jMenuItem1.setText("Quantidade de Embalgens vazias por tipo");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem1);
 
         jMenuBar1.add(jMenu1);
@@ -295,6 +303,10 @@ public class Principal extends javax.swing.JFrame {
         telaProdDev.setVisible(true);
         centralizaForm(telaProdDev);
     }//GEN-LAST:event_jmiDevolverActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        //
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments

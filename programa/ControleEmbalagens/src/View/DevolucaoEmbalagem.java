@@ -56,9 +56,19 @@ public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
         jLabel3.setText("Embalagem vazia foi devolvida:");
 
         jcbSim.setText("Sim");
+        jcbSim.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jcbSimMouseClicked(evt);
+            }
+        });
 
         jcbNao.setSelected(true);
         jcbNao.setText("Não");
+        jcbNao.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jcbNaoMouseClicked(evt);
+            }
+        });
 
         jLabel2.setText("Data Devolução:");
 
@@ -288,6 +298,26 @@ public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
         this.dispose();
     }//GEN-LAST:event_btnSairActionPerformed
 
+    private void jcbSimMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbSimMouseClicked
+        if (jcbNao.isSelected()) {
+            jcbSim.setSelected(true);
+            jcbNao.setSelected(false);
+        }
+        if ((jcbSim.isSelected() == false) && (jcbNao.isSelected() == false)) {
+            jcbSim.setSelected(true);
+        }
+    }//GEN-LAST:event_jcbSimMouseClicked
+
+    private void jcbNaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbNaoMouseClicked
+        if (jcbSim.isSelected()) {
+            jcbNao.setSelected(true);
+            jcbSim.setSelected(false);
+        }
+        if ((jcbNao.isSelected() == false) && (jcbSim.isSelected() == false)) {
+            jcbNao.setSelected(true);
+        }
+    }//GEN-LAST:event_jcbNaoMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExcluir;
@@ -357,11 +387,11 @@ public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
             opcao = 'T';
         }
 
-        d.setIdProduto(idDevolucao);
-        d.setFlagDevolucao(opcao);
-        d.setData(txtData.getText());
-
-        if (dc.atualizaDevolucao(d)) {
+        //d.setIdProduto(idDevolucao);
+        //d.setFlagDevolucao(opcao);
+        //d.setData(txtData.getText());
+        String data = txtData.getText();
+        if (dc.atualizaDevolucao(idDevolucao, opcao, data)) {
             JOptionPane.showMessageDialog(this, "Cadastro Gravadao com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
             limparCampos();
         } else {
@@ -394,6 +424,6 @@ public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
             jcbSim.setSelected(false);
             jcbNao.setSelected(true);
         }
-        txtData.grabFocus();
+        jcbSim.grabFocus();
     }
 }
