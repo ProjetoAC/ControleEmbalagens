@@ -75,14 +75,14 @@ GROUP BY p.nome, e.descricao]]>
 			<staticText>
 				<reportElement style="Title" x="0" y="13" width="263" height="33" uuid="b52988c4-2362-4621-8bde-fa0366d1515a"/>
 				<textElement verticalAlignment="Middle">
-					<font size="24"/>
+					<font size="24" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Relatório]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="SubTitle" x="112" y="36" width="262" height="32" uuid="59a5e189-51d5-4d4f-9d5b-b738b0cab1dd"/>
+				<reportElement style="SubTitle" x="112" y="36" width="283" height="32" uuid="59a5e189-51d5-4d4f-9d5b-b738b0cab1dd"/>
 				<textElement>
-					<font size="24"/>
+					<font size="24" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Embalagem por Produto]]></text>
 			</staticText>

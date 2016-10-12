@@ -62,7 +62,7 @@ GROUP BY e.descricao]]>
 			<staticText>
 				<reportElement style="Title" x="0" y="13" width="263" height="33" uuid="9aab4757-86d3-4a75-a672-a636b8ff70c3"/>
 				<textElement verticalAlignment="Middle">
-					<font size="24"/>
+					<font size="24" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Relatório]]></text>
 			</staticText>
@@ -74,8 +74,8 @@ GROUP BY e.descricao]]>
 				<text><![CDATA[Embalagens Devolvidas]]></text>
 			</staticText>
 			<image>
-				<reportElement x="390" y="-2" width="165" height="70" uuid="962b4d9e-fc75-4473-ad0e-6d953d9183bc"/>
-				<imageExpression><![CDATA["/home/j0nas/MEGA/aprender_e_crescer/ControleEmbalagens/programa/ControleEmbalagens/src/icon/embalagens.jpg"]]></imageExpression>
+				<reportElement x="427" y="0" width="126" height="67" uuid="b1dc8b68-2f0e-4e4a-9d65-2a48561d5b18"/>
+				<imageExpression><![CDATA["/home/j0nas/MEGA/aprender_e_crescer/ControleEmbalagens/programa/ControleEmbalagens/src/icon/reporttipo.jpg"]]></imageExpression>
 			</image>
 		</band>
 	</title>

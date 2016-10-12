@@ -1,6 +1,6 @@
-
 package View;
 
+import dao.Conexao;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -9,10 +9,23 @@ import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import java.awt.Image;
 import java.awt.Graphics;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 import org.apache.lucene.util.WeakIdentityMap;
+import java.io.File;
 
 /**
  *
@@ -68,7 +81,11 @@ public class Principal extends javax.swing.JFrame {
         jmDev = new javax.swing.JMenu();
         jmiDevolver = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        jmiEmbAEnt = new javax.swing.JMenuItem();
+        jmiEmbjAEnt = new javax.swing.JMenuItem();
+        jmiEmbPessoa = new javax.swing.JMenuItem();
+        jmiEmbEmp = new javax.swing.JMenuItem();
+        jmiEmbProd = new javax.swing.JMenuItem();
         jmSobre = new javax.swing.JMenu();
         jmiSobre = new javax.swing.JMenuItem();
 
@@ -166,13 +183,45 @@ public class Principal extends javax.swing.JFrame {
 
         jMenu1.setText("Relatórios");
 
-        jMenuItem1.setText("Quantidade de Embalgens vazias por tipo");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        jmiEmbAEnt.setText("Embalagens a entregar");
+        jmiEmbAEnt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                jmiEmbAEntActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenu1.add(jmiEmbAEnt);
+
+        jmiEmbjAEnt.setText("Embalagens já entregues");
+        jmiEmbjAEnt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiEmbjAEntActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jmiEmbjAEnt);
+
+        jmiEmbPessoa.setText("Embalagens por pessoa");
+        jmiEmbPessoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiEmbPessoaActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jmiEmbPessoa);
+
+        jmiEmbEmp.setText("Embalagens por empresa");
+        jmiEmbEmp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiEmbEmpActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jmiEmbEmp);
+
+        jmiEmbProd.setText("Embalagens por produto");
+        jmiEmbProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiEmbProdActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jmiEmbProd);
 
         jMenuBar1.add(jMenu1);
 
@@ -304,9 +353,25 @@ public class Principal extends javax.swing.JFrame {
         centralizaForm(telaProdDev);
     }//GEN-LAST:event_jmiDevolverActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        //
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    private void jmiEmbAEntActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEmbAEntActionPerformed
+        relatorioEmbAentregar();
+    }//GEN-LAST:event_jmiEmbAEntActionPerformed
+
+    private void jmiEmbjAEntActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEmbjAEntActionPerformed
+        relatorioEmbDevolvidas();
+    }//GEN-LAST:event_jmiEmbjAEntActionPerformed
+
+    private void jmiEmbPessoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEmbPessoaActionPerformed
+        relatorioEmbPessoa();
+    }//GEN-LAST:event_jmiEmbPessoaActionPerformed
+
+    private void jmiEmbEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEmbEmpActionPerformed
+        relatorioEmbEmpresa();
+    }//GEN-LAST:event_jmiEmbEmpActionPerformed
+
+    private void jmiEmbProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEmbProdActionPerformed
+        relatorioEmbProduto();
+    }//GEN-LAST:event_jmiEmbProdActionPerformed
 
     /**
      * @param args the command line arguments
@@ -354,7 +419,6 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
@@ -367,6 +431,11 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiCadEmbalagem;
     private javax.swing.JMenuItem jmiCidades;
     private javax.swing.JMenuItem jmiDevolver;
+    private javax.swing.JMenuItem jmiEmbAEnt;
+    private javax.swing.JMenuItem jmiEmbEmp;
+    private javax.swing.JMenuItem jmiEmbPessoa;
+    private javax.swing.JMenuItem jmiEmbProd;
+    private javax.swing.JMenuItem jmiEmbjAEnt;
     private javax.swing.JMenuItem jmiEmpresas;
     private javax.swing.JMenuItem jmiEstados;
     private javax.swing.JMenuItem jmiLancamento;
@@ -380,5 +449,110 @@ public class Principal extends javax.swing.JFrame {
         Dimension jInternalFrameSize = frame.getSize();
         frame.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
                 (desktopSize.height - jInternalFrameSize.height) / 2);
+    }
+
+    Statement st;
+    ResultSet rs;
+    static String SELECTRelEmbAent = "SELECT (SELECT SUM(quantidade) FROM devolucao WHERE flagentrega = 'F') AS qtdTotal, "
+            + "e.descricao, SUM(quantidade) FROM devolucao INNER JOIN produtos p USING (idProduto) "
+            + "INNER JOIN embalagens e USING (idEmbalagem) "
+            + "WHERE flagentrega = 'F' GROUP BY e.descricao;";
+    static String SELECTRelEmbDev = "SELECT (SELECT SUM(quantidade) FROM devolucao WHERE flagentrega = 'T') AS qtdTotal, "
+            + "e.descricao AS descricao, SUM(quantidade) FROM devolucao INNER JOIN produtos p USING (idProduto) "
+            + "INNER JOIN embalagens e USING (idEmbalagem) WHERE flagentrega = 'T' GROUP BY e.descricao;";
+    static String SELECTRelEmbEmp = "SELECT e.nome AS empresa, p.nome AS produto, SUM(d.quantidade) AS qtd "
+            + "FROM devolucao d INNER JOIN empresas e USING (idEmpresa) INNER JOIN produtos p USING (idProduto) "
+            + "GROUP BY p.nome, e.nome ORDER BY e.nome;";
+    static String SELECTRelEmbPes = "SELECT a.nome AS nome, p.nome AS produto, SUM(d.quantidade) AS qtd "
+            + "FROM devolucao d INNER JOIN pessoas a USING (idPessoa) INNER JOIN produtos p USING (idProduto) "
+            + "GROUP BY p.nome, a.nome ORDER BY a.nome;";
+    static String SELECTRelEmbPro = "SELECT p.nome, e.descricao, SUM(d.quantidade) "
+            + "FROM devolucao d INNER JOIN produtos p USING (idProduto) INNER JOIN embalagens e USING (idEmbalagem) "
+            + "GROUP BY p.nome, e.descricao;";
+
+    String caminhoRelEmbAent = "/home/j0nas/MEGA/aprender_e_crescer/ControleEmbalagens/programa/ControleEmbalagens/src/Report/RelatorioEmbADevolver.jasper";
+    String caminhoRelEmbDev = "/home/j0nas/MEGA/aprender_e_crescer/ControleEmbalagens/programa/ControleEmbalagens/src/Report/RelatorioEmbDevolvidas.jasper";
+    String caminhoRelEmbEmp = "/home/j0nas/MEGA/aprender_e_crescer/ControleEmbalagens/programa/ControleEmbalagens/src/Report/RelatorioEmbEmpresa.jasper";
+    String caminhoRelEmbPes = "/home/j0nas/MEGA/aprender_e_crescer/ControleEmbalagens/programa/ControleEmbalagens/src/Report/RelatorioEmbPessoa.jasper";
+    String caminhoRelEmbPro = "/home/j0nas/MEGA/aprender_e_crescer/ControleEmbalagens/programa/ControleEmbalagens/src/Report/RelatorioEmbProduto.jasper";
+
+    public void relatorioEmbAentregar() {
+        try {
+            PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(SELECTRelEmbAent);
+            rs = preparedStatement.executeQuery();
+            JRResultSetDataSource relatResul = new JRResultSetDataSource(rs);
+            JasperPrint jpPrint = JasperFillManager.fillReport(caminhoRelEmbAent, new HashMap(), relatResul);
+            JasperViewer jv = new JasperViewer(jpPrint, false);
+            jv.setDefaultCloseOperation(JasperViewer.DISPOSE_ON_CLOSE);
+            jv.setVisible(true);
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao chamar o relatório de devolucao de embalagens " + ex);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao chamar o relatório de devolucao de embalagens BD: " + ex);
+        }
+    }
+
+    public void relatorioEmbDevolvidas() {
+        try {
+            PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(SELECTRelEmbDev);
+            rs = preparedStatement.executeQuery();
+            JRResultSetDataSource relatResul = new JRResultSetDataSource(rs);
+            JasperPrint jpPrint = JasperFillManager.fillReport(caminhoRelEmbDev, new HashMap(), relatResul);
+            JasperViewer jv = new JasperViewer(jpPrint, false);
+            jv.setDefaultCloseOperation(JasperViewer.DISPOSE_ON_CLOSE);
+            jv.setVisible(true);
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao chamar o relatório de devolucao de embalagens " + ex);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao chamar o relatório de devolucao de embalagens BD: " + ex);
+        }
+    }
+
+    public void relatorioEmbEmpresa() {
+        try {
+            PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(SELECTRelEmbEmp);
+            rs = preparedStatement.executeQuery();
+            JRResultSetDataSource relatResul = new JRResultSetDataSource(rs);
+            JasperPrint jpPrint = JasperFillManager.fillReport(caminhoRelEmbEmp, new HashMap(), relatResul);
+            JasperViewer jv = new JasperViewer(jpPrint, false);
+            jv.setDefaultCloseOperation(JasperViewer.DISPOSE_ON_CLOSE);
+            jv.setVisible(true);
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao chamar o relatório de devolucao de embalagens " + ex);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao chamar o relatório de devolucao de embalagens BD: " + ex);
+        }
+    }
+
+    public void relatorioEmbPessoa() {
+        try {
+            PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(SELECTRelEmbPes);
+            rs = preparedStatement.executeQuery();
+            JRResultSetDataSource relatResul = new JRResultSetDataSource(rs);
+            JasperPrint jpPrint = JasperFillManager.fillReport(caminhoRelEmbPes, new HashMap(), relatResul);
+            JasperViewer jv = new JasperViewer(jpPrint, false);
+            jv.setDefaultCloseOperation(JasperViewer.DISPOSE_ON_CLOSE);
+            jv.setVisible(true);
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao chamar o relatório de devolucao de embalagens " + ex);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao chamar o relatório de devolucao de embalagens BD: " + ex);
+        }
+    }
+
+    public void relatorioEmbProduto() {
+        try {
+            PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(SELECTRelEmbPro);
+            rs = preparedStatement.executeQuery();
+            JRResultSetDataSource relatResul = new JRResultSetDataSource(rs);
+            JasperPrint jpPrint = JasperFillManager.fillReport(caminhoRelEmbPro, new HashMap(), relatResul);
+            JasperViewer jv = new JasperViewer(jpPrint, false);
+            jv.setDefaultCloseOperation(JasperViewer.DISPOSE_ON_CLOSE);
+            jv.setVisible(true);
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao chamar o relatório de devolucao de embalagens " + ex);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao chamar o relatório de devolucao de embalagens BD: " + ex);
+        }
     }
 }
