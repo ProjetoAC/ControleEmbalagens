@@ -53,8 +53,8 @@ public class DevolucaoController {
     public String buscarNomeProduto(int idDevolucao) {
         return devolucaoDao.buscarNomeProduto(idDevolucao);
     }
-    
-     public ArrayList<Devolucao> pesquisaProduto(String nome){
+
+    public ArrayList<Devolucao> pesquisaProduto(String nome) {
         return devolucaoDao.pesquisaProduto(nome);
     }
 

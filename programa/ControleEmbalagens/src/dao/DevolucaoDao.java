@@ -36,7 +36,9 @@ public class DevolucaoDao {
     static String SELECTPESQUISAPRODUTO = "SELECT iddevolucao, idpessoa, idempresa, idproduto, data, quantidade, "
             + "flagentrega, dataentrega FROM devolucao INNER JOIN produtos p USING (idProduto) "
             + "WHERE p.nome like ?";
-    
+    static String SELECBUSCANOMEPESSOA = "SELECT nome FROM pessoas WHERE idPessoa = ?;";
+    static String SELECBUSCANOMEEMPRESA = "SELECT nome FROM empresas WHERE idEmpresa = ?;";
+
     public boolean insereCadastroDevolucao(Devolucao devolucao) {
         ResultSet rs;
         int id = 0;

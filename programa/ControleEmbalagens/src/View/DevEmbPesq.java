@@ -9,7 +9,9 @@ import controller.ProdutoController;
 import java.awt.Container;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import static javax.swing.SwingConstants.CENTER;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 public class DevEmbPesq extends javax.swing.JInternalFrame {
@@ -65,7 +67,7 @@ public class DevEmbPesq extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,11 +146,16 @@ public class DevEmbPesq extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 461, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(242, 242, 242))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,7 +215,7 @@ public class DevEmbPesq extends javax.swing.JInternalFrame {
     }
 
     DefaultTableModel modeloTabela = new DefaultTableModel(new Object[]{
-        "Código", "Nome do Produto", "Data", "Quantidade", "Devolvido", "Data Devolução"}, 0) {
+        "Código", "Nome do Produto", "Data", "Quantidade", "Pessoa", "Empresa", "Devolvido", "Data Devolução"}, 0) {
         public boolean isCellEditable(int rowIndex, int mColIndex) {
             return false;
         }
@@ -225,12 +232,25 @@ public class DevEmbPesq extends javax.swing.JInternalFrame {
         tblPesqProduto.getColumnModel().getColumn(0).setMinWidth(0);
         tblPesqProduto.getColumnModel().getColumn(0).setPreferredWidth(0);
         tblPesqProduto.getColumnModel().getColumn(0).setMaxWidth(0);
-        tblPesqProduto.getColumnModel().getColumn(1).setPreferredWidth(300);
-        tblPesqProduto.getColumnModel().getColumn(2).setPreferredWidth(100);
-        tblPesqProduto.getColumnModel().getColumn(3).setPreferredWidth(100);
-        tblPesqProduto.getColumnModel().getColumn(4).setPreferredWidth(70);
-        tblPesqProduto.getColumnModel().getColumn(5).setPreferredWidth(130);
+        tblPesqProduto.getColumnModel().getColumn(1).setPreferredWidth(200);
+        tblPesqProduto.getColumnModel().getColumn(2).setPreferredWidth(90);
+        tblPesqProduto.getColumnModel().getColumn(3).setPreferredWidth(90);
+        tblPesqProduto.getColumnModel().getColumn(4).setPreferredWidth(200);
+        tblPesqProduto.getColumnModel().getColumn(5).setPreferredWidth(180);
+        tblPesqProduto.getColumnModel().getColumn(6).setPreferredWidth(80);
+        tblPesqProduto.getColumnModel().getColumn(7).setPreferredWidth(110);
+        tblPesqProduto.getColumnModel().getColumn(2).setCellRenderer(centralizar);
+        tblPesqProduto.getColumnModel().getColumn(3).setCellRenderer(centralizar);
+        tblPesqProduto.getColumnModel().getColumn(6).setCellRenderer(centralizar);
+        tblPesqProduto.getColumnModel().getColumn(7).setCellRenderer(centralizar);
     }
+
+    DefaultTableCellRenderer centralizar = new DefaultTableCellRenderer() {
+        public void setValue(Object value) {
+            setHorizontalAlignment(CENTER);
+            super.setValue(value);
+        }
+    };
 
     private void limparPesquisa() {
         txtPesquisa.setText("");
@@ -239,19 +259,31 @@ public class DevEmbPesq extends javax.swing.JInternalFrame {
     }
 
     private void insereDadosTabela(Devolucao devolucao) {
-        Object[] dados = new Object[6];
+        Object[] dados = new Object[8];
         dados[0] = devolucao.getIdDevolucao();
         dados[1] = carregaProdutoTabela(devolucao.getIdProduto());
         dados[2] = devolucao.getData();
         dados[3] = devolucao.getQuantidade();
-        dados[4] = devolucao.getFlagDevolucao();
-        dados[5] = devolucao.getDataEntrega();
+        dados[4] = dv.buscarNomePessoa(devolucao.getIdPessoa());
+        dados[5] = dv.buscarNomeEmpresa(devolucao.getIdEmpresa());
+        dados[6] = carregaOpcaoFlag(devolucao.getFlagDevolucao());
+        dados[7] = devolucao.getDataEntrega();
         modeloTabela.addRow(dados);
 
     }
 
     private int getIdDevolucaoSelecionado() {
         return Integer.parseInt(modeloTabela.getValueAt(tblPesqProduto.getSelectedRow(), 0).toString());
+    }
+
+    private String carregaOpcaoFlag(char opcao) {
+        String flag = "";
+        if (opcao == 'T') {
+            flag = "Sim";
+        } else {
+            flag = "Não";
+        }
+        return flag;
     }
 
     public void exibirDadosCadastros() {

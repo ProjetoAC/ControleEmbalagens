@@ -443,11 +443,11 @@ public class ProdutoUtilizado extends javax.swing.JInternalFrame {
         }
         idDevolucao = a;
         idProduto = b;
-        jcbPessoa.setSelectedItem(dv.buscarNomePessoa(a));
-        jcbEmpresa.setSelectedItem(dv.buscarNomeEmpresa(a));
-        txtProduto.setText(dv.buscarNomeProduto(a));
+        jcbPessoa.setSelectedItem(dv.buscarNomePessoa(idDevolucao));
+        jcbEmpresa.setSelectedItem(dv.buscarNomeEmpresa(idDevolucao));
+        txtProduto.setText(dv.buscarNomeProduto(idDevolucao));
         txtEmbalagem.setText(dv.buscarDescricaoEmbalagem(idProduto));
-        txtClasseTox.setText(dv.buscarClasseTox(a));
+        txtClasseTox.setText(dv.buscarClasseTox(idDevolucao));
         txtQtde.setText(String.valueOf(c));
         txtData.setText(d);
         btnPesqP.grabFocus();
