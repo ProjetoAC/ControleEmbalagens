@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2016-10-14T20:32:50 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioEmbEmpresa" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="53ba1dd9-b89d-4085-bbd5-c91c8c0025be">
 	<property name="ireport.zoom" value="1.3310000000000006"/>
 	<property name="ireport.x" value="3"/>
@@ -22,15 +24,12 @@ ORDER BY e.nome]]>
 		<groupHeader>
 			<band height="40">
 				<textField>
-					<reportElement style="SubTitle" x="47" y="8" width="386" height="24" forecolor="#006600" uuid="b659638a-a475-459c-b5f2-f28854915f1e"/>
+					<reportElement style="SubTitle" x="32" y="8" width="386" height="24" forecolor="#006600" uuid="b659638a-a475-459c-b5f2-f28854915f1e"/>
 					<textElement>
 						<font isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{empresa}]]></textFieldExpression>
 				</textField>
-				<rectangle>
-					<reportElement mode="Opaque" x="10" y="7" width="26" height="24" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="f0aeb5a9-23c9-4cce-8891-c19a7aba5f41"/>
-				</rectangle>
 				<line>
 					<reportElement x="0" y="39" width="553" height="1" uuid="9f355f4a-13c4-4dfd-a2e9-10e4ce83cc42"/>
 				</line>
@@ -41,6 +40,9 @@ ORDER BY e.nome]]>
 					</textElement>
 					<text><![CDATA[Quantidade]]></text>
 				</staticText>
+				<rectangle>
+					<reportElement mode="Opaque" x="3" y="11" width="19" height="19" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="74b02c9a-6bc7-45e1-9fea-ef8abbf9add7"/>
+				</rectangle>
 			</band>
 		</groupHeader>
 		<groupFooter>
@@ -52,7 +54,7 @@ ORDER BY e.nome]]>
 		<groupHeader>
 			<band height="31">
 				<textField>
-					<reportElement style="SubTitle" x="94" y="6" width="339" height="20" uuid="effa3dc8-7695-4699-8399-fe97c18a7d1b"/>
+					<reportElement style="SubTitle" x="40" y="5" width="339" height="20" uuid="effa3dc8-7695-4699-8399-fe97c18a7d1b"/>
 					<textElement>
 						<font size="16" isBold="true"/>
 					</textElement>

@@ -1,31 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2016-10-14T20:57:55 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioEmbPessoa" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="504dc2a3-1f42-47ef-88a8-b9c3568d5ca3">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="controleEmbalagens"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="1000"/>
 	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
 	<style name="Detail" fontName="Arial" fontSize="12"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT a.nome, p.nome AS produto FROM devolucao
+		<![CDATA[SELECT a.nome, p.nome AS produto, SUM(d.quantidade) AS qtd 
+FROM devolucao d
 INNER JOIN pessoas a USING (idPessoa)
 INNER JOIN produtos p USING (idProduto)
-ORDER BY a.nome]]>
+GROUP BY p.nome, a.nome ORDER BY a.nome]]>
 	</queryString>
 	<field name="nome" class="java.lang.String"/>
 	<field name="produto" class="java.lang.String"/>
+	<field name="qtd" class="java.lang.Long"/>
 	<group name="nome">
 		<groupExpression><![CDATA[$F{nome}]]></groupExpression>
 		<groupHeader>
 			<band height="40">
 				<textField>
-					<reportElement style="SubTitle" x="47" y="13" width="506" height="24" forecolor="#006600" uuid="3a636c9a-37d9-4b64-a2cd-0eabf46ffb1c"/>
+					<reportElement style="SubTitle" positionType="FixRelativeToBottom" stretchType="RelativeToBandHeight" x="30" y="15" width="390" height="24" forecolor="#006600" uuid="3a636c9a-37d9-4b64-a2cd-0eabf46ffb1c"/>
 					<textElement>
 						<font isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
 				</textField>
 				<rectangle>
-					<reportElement mode="Opaque" x="0" y="13" width="36" height="24" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="d4ef174d-4000-4943-a7d8-bcb0ee562678"/>
+					<reportElement mode="Opaque" x="3" y="15" width="19" height="19" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="986dfd60-afa7-4628-8c24-e7ef6a9a6144"/>
 				</rectangle>
+				<staticText>
+					<reportElement x="459" y="13" width="100" height="25" forecolor="#066000" uuid="90f9239e-7d35-4701-a2ee-fce3577390c1"/>
+					<textElement>
+						<font fontName="Arial" size="18"/>
+					</textElement>
+					<text><![CDATA[Quantidade]]></text>
+				</staticText>
 			</band>
 		</groupHeader>
 		<groupFooter>
@@ -35,13 +50,23 @@ ORDER BY a.nome]]>
 	<group name="produto">
 		<groupExpression><![CDATA[$F{produto}]]></groupExpression>
 		<groupHeader>
-			<band height="30">
+			<band height="45">
 				<textField>
-					<reportElement style="SubTitle" x="0" y="4" width="460" height="20" uuid="fdae2f1b-6e62-4535-a13c-a94271b92d68"/>
+					<reportElement style="SubTitle" x="30" y="10" width="390" height="20" forecolor="#666666" uuid="fdae2f1b-6e62-4535-a13c-a94271b92d68"/>
 					<textElement>
 						<font size="16" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{produto}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="490" y="9" width="65" height="25" forecolor="#666666" uuid="c863080d-ce92-4489-8a67-63a5150c7dc6"/>
+					<textElement>
+						<font fontName="Arial" size="16" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{qtd}
+
+
+]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -51,26 +76,31 @@ ORDER BY a.nome]]>
 	</background>
 	<title>
 		<band height="70" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="0" y="13" width="110" height="33" uuid="d8e7d3c9-4cae-4042-bcc2-3a4f8d596cd3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="18" isBold="false" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Relatório de]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="109" y="30" width="270" height="38" uuid="9c37b2da-4d9b-419b-8e53-21d971bbd174"/>
+				<textElement>
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[Embalagem por Pessoa]]></text>
+			</staticText>
 			<image>
-				<reportElement x="275" y="0" width="300" height="64" uuid="d621251a-1aad-4570-807a-e5b7a6ea9119"/>
-				<imageExpression><![CDATA["leaf_banner_green.png"]]></imageExpression>
+				<reportElement x="416" y="0" width="208" height="70" uuid="f433a1cb-670e-4e7a-96a2-7791789b10a3"/>
+				<imageExpression><![CDATA["/home/j0nas/MEGA/aprender_e_crescer/ControleEmbalagens/programa/ControleEmbalagens/src/icon/reporttipo.jpg"]]></imageExpression>
 			</image>
-			<staticText>
-				<reportElement style="Title" x="0" y="13" width="263" height="33" uuid="d8e7d3c9-4cae-4042-bcc2-3a4f8d596cd3"/>
-				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[Leaf Green Title]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="SubTitle" x="100" y="46" width="174" height="22" uuid="9c37b2da-4d9b-419b-8e53-21d971bbd174"/>
-				<text><![CDATA[Leaf Green SubTitle]]></text>
-			</staticText>
 		</band>
 	</title>
 	<pageHeader>
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="36" splitType="Stretch">
+		<band height="57" splitType="Stretch">
 			<line>
 				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" uuid="1d1efc4c-0c9f-431e-817b-3291c44e2174"/>
 				<graphicElement>

@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2016-10-14T20:19:40 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioEmbDevolvidas" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a959f0f7-c474-4101-9f52-626084f07a9c">
 	<property name="ireport.zoom" value="1.3310000000000004"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="controleEmbalagens"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="1000"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -15,25 +21,25 @@ INNER JOIN embalagens e USING (idEmbalagem)
 WHERE flagentrega = 'T'
 GROUP BY e.descricao]]>
 	</queryString>
+	<field name="qtdtotal" class="java.lang.Long"/>
 	<field name="descricao" class="java.lang.String"/>
 	<field name="sum" class="java.lang.Long"/>
-	<field name="qtdtotal" class="java.lang.Long"/>
 	<group name="descricao">
 		<groupExpression><![CDATA[$F{descricao}]]></groupExpression>
 		<groupHeader>
-			<band height="26">
+			<band height="36">
 				<textField>
-					<reportElement style="SubTitle" x="31" y="0" width="448" height="24" forecolor="#006600" uuid="36941c1d-a50c-4e0c-bad8-b0b61e18071b"/>
+					<reportElement style="SubTitle" x="31" y="7" width="448" height="24" forecolor="#006600" uuid="36941c1d-a50c-4e0c-bad8-b0b61e18071b"/>
 					<textElement>
 						<font isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
 				</textField>
 				<rectangle>
-					<reportElement mode="Opaque" x="4" y="4" width="20" height="20" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="be82fe76-ca9f-4165-90ee-4f609cbd93b8"/>
+					<reportElement mode="Opaque" x="4" y="8" width="20" height="20" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="be82fe76-ca9f-4165-90ee-4f609cbd93b8"/>
 				</rectangle>
 				<textField>
-					<reportElement style="SubTitle" x="486" y="4" width="67" height="20" uuid="515aa871-c8c0-4457-96d1-0805684aa5b0"/>
+					<reportElement style="SubTitle" x="486" y="9" width="67" height="20" uuid="515aa871-c8c0-4457-96d1-0805684aa5b0"/>
 					<textElement>
 						<font size="16" isBold="true"/>
 					</textElement>
@@ -48,7 +54,7 @@ GROUP BY e.descricao]]>
 	<group name="sum">
 		<groupExpression><![CDATA[$F{sum}]]></groupExpression>
 		<groupHeader>
-			<band height="4"/>
+			<band/>
 		</groupHeader>
 	</group>
 	<group name="qtdtotal">
@@ -60,11 +66,11 @@ GROUP BY e.descricao]]>
 	<title>
 		<band height="70" splitType="Stretch">
 			<staticText>
-				<reportElement style="Title" x="0" y="13" width="263" height="33" uuid="9aab4757-86d3-4a75-a672-a636b8ff70c3"/>
+				<reportElement style="Title" x="0" y="13" width="100" height="33" uuid="9aab4757-86d3-4a75-a672-a636b8ff70c3"/>
 				<textElement verticalAlignment="Middle">
-					<font size="24" isBold="false"/>
+					<font size="18" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Relatório]]></text>
+				<text><![CDATA[Relatório de]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="SubTitle" x="113" y="36" width="277" height="32" uuid="ff81d58c-a07e-47e1-8a04-f1bc00e13ec8"/>
@@ -83,13 +89,33 @@ GROUP BY e.descricao]]>
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="36" splitType="Stretch">
+		<band height="52" splitType="Stretch">
 			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" uuid="98226743-3324-41f0-aaff-12980d7e9589"/>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="51" width="555" height="1" uuid="98226743-3324-41f0-aaff-12980d7e9589"/>
 				<graphicElement>
 					<pen lineWidth="0.5" lineColor="#999999"/>
 				</graphicElement>
 			</line>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="1" y="16" width="555" height="1" uuid="3a3438e2-47cd-4aa1-a82f-8ebcf0024c54"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="0" y="19" width="100" height="30" forecolor="#090A09" uuid="ea37c75b-0d93-4c2c-8412-5a5663807409"/>
+				<textElement>
+					<font fontName="Arial" size="18"/>
+				</textElement>
+				<text><![CDATA[Tipo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="461" y="20" width="100" height="30" forecolor="#090A09" uuid="5472148d-540e-43ee-81f6-566c06f8255f"/>
+				<textElement>
+					<font fontName="Arial" size="18"/>
+				</textElement>
+				<text><![CDATA[Quantidade]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>

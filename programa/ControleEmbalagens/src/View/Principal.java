@@ -1,31 +1,19 @@
 package View;
 
-import dao.Conexao;
+import controller.RelatorioController;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Image;
-import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import java.awt.Image;
 import java.awt.Graphics;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
-import org.apache.lucene.util.WeakIdentityMap;
 import java.io.File;
+import java.util.HashMap;
 
 /**
  *
@@ -33,9 +21,8 @@ import java.io.File;
  */
 public class Principal extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Principal
-     */
+    RelatorioController rc;
+
     public Principal() {
         initComponents();
         this.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
@@ -90,6 +77,8 @@ public class Principal extends javax.swing.JFrame {
         jmiSobre = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jMenuBar1.setBorder(null);
 
         jmArquivos.setText("Arquivo");
 
@@ -250,14 +239,14 @@ public class Principal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jdpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 660, Short.MAX_VALUE)
+                .addComponent(jdpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jdpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE)
+                .addComponent(jdpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -451,108 +440,95 @@ public class Principal extends javax.swing.JFrame {
                 (desktopSize.height - jInternalFrameSize.height) / 2);
     }
 
-    Statement st;
-    ResultSet rs;
-    static String SELECTRelEmbAent = "SELECT (SELECT SUM(quantidade) FROM devolucao WHERE flagentrega = 'F') AS qtdTotal, "
-            + "e.descricao, SUM(quantidade) FROM devolucao INNER JOIN produtos p USING (idProduto) "
-            + "INNER JOIN embalagens e USING (idEmbalagem) "
-            + "WHERE flagentrega = 'F' GROUP BY e.descricao;";
-    static String SELECTRelEmbDev = "SELECT (SELECT SUM(quantidade) FROM devolucao WHERE flagentrega = 'T') AS qtdTotal, "
-            + "e.descricao AS descricao, SUM(quantidade) FROM devolucao INNER JOIN produtos p USING (idProduto) "
-            + "INNER JOIN embalagens e USING (idEmbalagem) WHERE flagentrega = 'T' GROUP BY e.descricao;";
-    static String SELECTRelEmbEmp = "SELECT e.nome AS empresa, p.nome AS produto, SUM(d.quantidade) AS qtd "
-            + "FROM devolucao d INNER JOIN empresas e USING (idEmpresa) INNER JOIN produtos p USING (idProduto) "
-            + "GROUP BY p.nome, e.nome ORDER BY e.nome;";
-    static String SELECTRelEmbPes = "SELECT a.nome AS nome, p.nome AS produto, SUM(d.quantidade) AS qtd "
-            + "FROM devolucao d INNER JOIN pessoas a USING (idPessoa) INNER JOIN produtos p USING (idProduto) "
-            + "GROUP BY p.nome, a.nome ORDER BY a.nome;";
-    static String SELECTRelEmbPro = "SELECT p.nome, e.descricao, SUM(d.quantidade) "
-            + "FROM devolucao d INNER JOIN produtos p USING (idProduto) INNER JOIN embalagens e USING (idEmbalagem) "
-            + "GROUP BY p.nome, e.descricao;";
+    String caminhoRelEmbAent = getCaminho() + "/src/Report/RelatorioEmbADevolver.jasper";
+    String caminhoRelEmbDev = getCaminho() + "/src/Report/RelatorioEmbDevolvidas.jasper";
+    String caminhoRelEmbEmp = getCaminho() + "/src/Report/RelatorioEmbEmpresa.jasper";
+    String caminhoRelEmbPes = getCaminho() + "/src/Report/RelatorioEmbPessoa.jasper";
+    String caminhoRelEmbPro = getCaminho() + "/src/Report/RelatorioEmbProduto.jasper";
 
-    String caminhoRelEmbAent = "/home/j0nas/MEGA/aprender_e_crescer/ControleEmbalagens/programa/ControleEmbalagens/src/Report/RelatorioEmbADevolver.jasper";
-    String caminhoRelEmbDev = "/home/j0nas/MEGA/aprender_e_crescer/ControleEmbalagens/programa/ControleEmbalagens/src/Report/RelatorioEmbDevolvidas.jasper";
-    String caminhoRelEmbEmp = "/home/j0nas/MEGA/aprender_e_crescer/ControleEmbalagens/programa/ControleEmbalagens/src/Report/RelatorioEmbEmpresa.jasper";
-    String caminhoRelEmbPes = "/home/j0nas/MEGA/aprender_e_crescer/ControleEmbalagens/programa/ControleEmbalagens/src/Report/RelatorioEmbPessoa.jasper";
-    String caminhoRelEmbPro = "/home/j0nas/MEGA/aprender_e_crescer/ControleEmbalagens/programa/ControleEmbalagens/src/Report/RelatorioEmbProduto.jasper";
+    private String getCaminho() {
+
+        try {
+            return new File("").getCanonicalPath();
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, "Erro ao carregar caminho do relatório");
+        }
+       return "";
+    }
 
     public void relatorioEmbAentregar() {
+        if (rc == null) {
+            rc = new RelatorioController();
+        }
         try {
-            PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(SELECTRelEmbAent);
-            rs = preparedStatement.executeQuery();
-            JRResultSetDataSource relatResul = new JRResultSetDataSource(rs);
-            JasperPrint jpPrint = JasperFillManager.fillReport(caminhoRelEmbAent, new HashMap(), relatResul);
+            JRResultSetDataSource relResul = new JRResultSetDataSource(rc.relatorioEmbAentregar());
+            JasperPrint jpPrint = JasperFillManager.fillReport(caminhoRelEmbAent, new HashMap(), relResul);
             JasperViewer jv = new JasperViewer(jpPrint, false);
             jv.setDefaultCloseOperation(JasperViewer.DISPOSE_ON_CLOSE);
             jv.setVisible(true);
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao chamar o relatório de devolucao de embalagens " + ex);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao chamar o relatório de devolucao de embalagens BD: " + ex);
         }
+
     }
 
     public void relatorioEmbDevolvidas() {
+        if (rc == null) {
+            rc = new RelatorioController();
+        }
         try {
-            PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(SELECTRelEmbDev);
-            rs = preparedStatement.executeQuery();
-            JRResultSetDataSource relatResul = new JRResultSetDataSource(rs);
-            JasperPrint jpPrint = JasperFillManager.fillReport(caminhoRelEmbDev, new HashMap(), relatResul);
+            JRResultSetDataSource relResul = new JRResultSetDataSource(rc.relatorioEmbDevolvidas());
+            JasperPrint jpPrint = JasperFillManager.fillReport(caminhoRelEmbDev, new HashMap(), relResul);
             JasperViewer jv = new JasperViewer(jpPrint, false);
             jv.setDefaultCloseOperation(JasperViewer.DISPOSE_ON_CLOSE);
             jv.setVisible(true);
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao chamar o relatório de devolucao de embalagens " + ex);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao chamar o relatório de devolucao de embalagens BD: " + ex);
         }
     }
 
     public void relatorioEmbEmpresa() {
+        if (rc == null) {
+            rc = new RelatorioController();
+        }
         try {
-            PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(SELECTRelEmbEmp);
-            rs = preparedStatement.executeQuery();
-            JRResultSetDataSource relatResul = new JRResultSetDataSource(rs);
-            JasperPrint jpPrint = JasperFillManager.fillReport(caminhoRelEmbEmp, new HashMap(), relatResul);
+            JRResultSetDataSource relResul = new JRResultSetDataSource(rc.relatorioEmbEmpresa());
+            JasperPrint jpPrint = JasperFillManager.fillReport(caminhoRelEmbEmp, new HashMap(), relResul);
             JasperViewer jv = new JasperViewer(jpPrint, false);
             jv.setDefaultCloseOperation(JasperViewer.DISPOSE_ON_CLOSE);
             jv.setVisible(true);
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao chamar o relatório de devolucao de embalagens " + ex);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao chamar o relatório de devolucao de embalagens BD: " + ex);
         }
     }
 
     public void relatorioEmbPessoa() {
+        if (rc == null) {
+            rc = new RelatorioController();
+        }
         try {
-            PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(SELECTRelEmbPes);
-            rs = preparedStatement.executeQuery();
-            JRResultSetDataSource relatResul = new JRResultSetDataSource(rs);
-            JasperPrint jpPrint = JasperFillManager.fillReport(caminhoRelEmbPes, new HashMap(), relatResul);
+            JRResultSetDataSource relResul = new JRResultSetDataSource(rc.relatorioEmbPessoa());
+            JasperPrint jpPrint = JasperFillManager.fillReport(caminhoRelEmbPes, new HashMap(), relResul);
             JasperViewer jv = new JasperViewer(jpPrint, false);
             jv.setDefaultCloseOperation(JasperViewer.DISPOSE_ON_CLOSE);
             jv.setVisible(true);
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao chamar o relatório de devolucao de embalagens " + ex);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao chamar o relatório de devolucao de embalagens BD: " + ex);
         }
     }
 
     public void relatorioEmbProduto() {
+        if (rc == null) {
+            rc = new RelatorioController();
+        }
         try {
-            PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(SELECTRelEmbPro);
-            rs = preparedStatement.executeQuery();
-            JRResultSetDataSource relatResul = new JRResultSetDataSource(rs);
-            JasperPrint jpPrint = JasperFillManager.fillReport(caminhoRelEmbPro, new HashMap(), relatResul);
+            JRResultSetDataSource relResul = new JRResultSetDataSource(rc.relatorioEmbProduto());
+            JasperPrint jpPrint = JasperFillManager.fillReport(caminhoRelEmbPro, new HashMap(), relResul);
             JasperViewer jv = new JasperViewer(jpPrint, false);
             jv.setDefaultCloseOperation(JasperViewer.DISPOSE_ON_CLOSE);
             jv.setVisible(true);
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao chamar o relatório de devolucao de embalagens " + ex);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao chamar o relatório de devolucao de embalagens BD: " + ex);
         }
     }
 }

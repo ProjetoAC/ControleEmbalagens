@@ -37,7 +37,6 @@ INNER JOIN produtos p USING (idProduto)
 GROUP BY p.nome, e.nome
 ORDER BY e.nome
 
---(SELECT p.nome FROM devolucao INNER JOIN produtos p USING (idProduto) GROUP BY p.nome) AS produto
 --relatorio de quantidade de dias que a embalagem está aguardando devolucao
 
 
