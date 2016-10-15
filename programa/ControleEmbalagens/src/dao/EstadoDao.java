@@ -42,7 +42,6 @@ public class EstadoDao {
 
     public ArrayList<Estado> buscaCadastroEstado() {
         ArrayList<Estado> lista = new ArrayList<Estado>();
-
         try {
             PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(SELECTALL);
             ResultSet rs = preparedStatement.executeQuery();
@@ -72,7 +71,7 @@ public class EstadoDao {
             preparedStatement.execute();
             return true;
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Problema ao fazer update do update do cadastro de estado:" + ex);
+            JOptionPane.showMessageDialog(null, "Problema ao fazer update do update do cadastro de estado: " + ex);
         }
         return false;
     }
@@ -84,7 +83,7 @@ public class EstadoDao {
             preparedStatement.execute();
             return true;
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Problema ao deletar o estado do cadastro estado:" + ex);
+            JOptionPane.showMessageDialog(null, "Problema ao deletar o estado do cadastro estado: " + ex);
         }
         return false;
     }
@@ -98,9 +97,8 @@ public class EstadoDao {
             while (rs.next()) {
                 sigla = rs.getString("sigla");
             }
-
         } catch (Exception ex) {
-            System.out.println("Problema ao carregar cadastro de cidades : " + ex);
+            System.out.println("Problema ao carregar cadastro de cidades: " + ex);
             JOptionPane.showMessageDialog(null, "Erro:" + ex);
         }
         return sigla;

@@ -482,7 +482,7 @@ public class Principal extends javax.swing.JFrame {
             jv.setDefaultCloseOperation(JasperViewer.DISPOSE_ON_CLOSE);
             jv.setVisible(true);
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao chamar o relatório de devolucao de embalagens " + ex);
+            JOptionPane.showMessageDialog(null, "Erro ao chamar o relatório de embalagens a entregar" + ex);
         }
 
     }
@@ -513,7 +513,7 @@ public class Principal extends javax.swing.JFrame {
             jv.setDefaultCloseOperation(JasperViewer.DISPOSE_ON_CLOSE);
             jv.setVisible(true);
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao chamar o relatório de devolucao de embalagens " + ex);
+            JOptionPane.showMessageDialog(null, "Erro ao chamar o relatório de devolucao de embalagens por empresa " + ex);
         }
     }
 
@@ -528,7 +528,7 @@ public class Principal extends javax.swing.JFrame {
             jv.setDefaultCloseOperation(JasperViewer.DISPOSE_ON_CLOSE);
             jv.setVisible(true);
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao chamar o relatório de devolucao de embalagens " + ex);
+            JOptionPane.showMessageDialog(null, "Erro ao chamar o relatório de devolucao de embalagens  por pessoa" + ex);
         }
     }
 
@@ -543,7 +543,7 @@ public class Principal extends javax.swing.JFrame {
             jv.setDefaultCloseOperation(JasperViewer.DISPOSE_ON_CLOSE);
             jv.setVisible(true);
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao chamar o relatório de devolucao de embalagens " + ex);
+            JOptionPane.showMessageDialog(null, "Erro ao chamar o relatório de devolucao de embalagens por produto " + ex);
         }
     }
 
@@ -558,7 +558,7 @@ public class Principal extends javax.swing.JFrame {
             jv.setDefaultCloseOperation(JasperViewer.DISPOSE_ON_CLOSE);
             jv.setVisible(true);
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao chamar o relatório de devolucao de embalagens " + ex);
+            JOptionPane.showMessageDialog(null, "Erro ao chamar o relatório de devolucao de embalagens por classe toxicológico " + ex);
         }
     }
 }

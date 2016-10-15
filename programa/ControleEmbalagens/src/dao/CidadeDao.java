@@ -42,11 +42,9 @@ public class CidadeDao {
 
     public ArrayList<Cidade> buscaCadastroCidade() {
         ArrayList<Cidade> lista = new ArrayList<Cidade>();
-
         try {
             PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(SELECTALL);
             ResultSet rs = preparedStatement.executeQuery();
-
             while (rs.next()) {
                 Cidade cidade = new Cidade();
                 cidade.setIdCidade(rs.getInt("idCidade"));
@@ -54,16 +52,14 @@ public class CidadeDao {
                 cidade.setNome(rs.getString("nome"));
                 lista.add(cidade);
             }
-
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Problema ao carregar cadastro de cidades :" + ex);
+            JOptionPane.showMessageDialog(null, "Problema ao carregar cadastro de cidades: " + ex);
         }
         return lista;
     }
 
     public boolean updateCadastroCidade(Cidade cidade) {
         try {
-
             PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(UPDATE);
             preparedStatement.setInt(1, cidade.getIdCidade());
             preparedStatement.setInt(2, cidade.getIdEstado());
@@ -91,18 +87,15 @@ public class CidadeDao {
 
     public ArrayList<Cidade> buscaEstadoCidade(String estado) {
         ArrayList<Cidade> lista = new ArrayList<Cidade>();
-
         try {
             PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(SELECTESTADOCIDADE);
             preparedStatement.setString(1, estado);
             ResultSet rs = preparedStatement.executeQuery();
-
             while (rs.next()) {
                 Cidade cidade = new Cidade();
                 cidade.setNome(rs.getString("nome"));
                 lista.add(cidade);
             }
-
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Problema ao carregar cadastro de cidades: " + ex);
         }
@@ -115,11 +108,9 @@ public class CidadeDao {
             PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(SELECBUSCACIDADE);
             preparedStatement.setInt(1, idCidade);
             ResultSet rs = preparedStatement.executeQuery();
-
             while (rs.next()) {
                 cidade = rs.getString("nome");
             }
-
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Problema ao carregar cadastro de cidades: " + ex);
         }

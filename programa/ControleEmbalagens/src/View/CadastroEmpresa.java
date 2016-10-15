@@ -599,8 +599,11 @@ public class CadastroEmpresa extends javax.swing.JInternalFrame {
     }
 
     public void excluirDados() {
+        if (ec == null) {
+                ec = new EmpresaController();
+            }
         if (0 == JOptionPane.showConfirmDialog(rootPane, "Deseja excluir essas informações?", "Excluir", JOptionPane.YES_NO_OPTION)) {
-            if (new EmpresaController().excluirCadastroEmpresa(idEmpresa)) {
+            if (ec.excluirCadastroEmpresa(idEmpresa)) {
                 limparCampos();
             }
         }
@@ -621,7 +624,6 @@ public class CadastroEmpresa extends javax.swing.JInternalFrame {
         jcbCidade.removeAllItems();
         txtEmail.setText("");
         txtNome.grabFocus();
-
     }
 
     private void gravarDados() {
@@ -644,8 +646,7 @@ public class CadastroEmpresa extends javax.swing.JInternalFrame {
         empresa.setTelcell(txtTelC.getText());
         empresa.setEmail(txtEmail.getText());
 
-        EmpresaController empresaController = new EmpresaController();
-        if (empresaController.insereCadastroEmpresa(empresa)) {
+        if (ec.insereCadastroEmpresa(empresa)) {
             JOptionPane.showMessageDialog(this, "Cadastro Gravadao com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
             limparCampos();
         } else {

@@ -15,7 +15,7 @@ public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
     DevolucaoController dc;
     PessoaController pec;
     EmpresaController ec;
-    Devolucao d;
+    Devolucao devolucao;
     int idDevolucao;
 
     public DevolucaoEmbalagem() {
@@ -361,8 +361,11 @@ public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
     }
 
     public void excluirDados() {
+        if (dc == null) {
+            dc = new DevolucaoController();
+        }
         if (0 == JOptionPane.showConfirmDialog(rootPane, "Deseja excluir essas informações?", "Excluir", JOptionPane.YES_NO_OPTION)) {
-            if (new DevolucaoController().excluirCadastroDevolucao(idDevolucao)) {
+            if (dc.excluirCadastroDevolucao(idDevolucao)) {
                 limparCampos();
             }
         }
@@ -370,8 +373,8 @@ public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
 
     private void gravarDados() {
         char opcao = ' ';
-        if (d == null) {
-            d = new Devolucao();
+        if (devolucao == null) {
+            devolucao = new Devolucao();
         }
         if (dc == null) {
             dc = new DevolucaoController();
@@ -389,11 +392,10 @@ public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
             opcao = 'T';
         }
 
-        //d.setIdProduto(idDevolucao);
-        //d.setFlagDevolucao(opcao);
-        //d.setData(txtData.getText());
-        String data = txtData.getText();
-        if (dc.atualizaDevolucao(idDevolucao, opcao, data)) {
+        devolucao.setIdDevolucao(idDevolucao);
+        devolucao.setFlagDevolucao(opcao);
+        devolucao.setDataEntrega(txtData.getText());
+        if (dc.atualizaDevolucao(devolucao)) {
             JOptionPane.showMessageDialog(this, "Cadastro Gravadao com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
             limparCampos();
         } else {

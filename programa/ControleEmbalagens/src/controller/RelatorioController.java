@@ -7,7 +7,6 @@ package controller;
 
 import dao.RelatorioDao;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 
 /**
  *

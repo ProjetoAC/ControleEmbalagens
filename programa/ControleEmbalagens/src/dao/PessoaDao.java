@@ -8,10 +8,6 @@ import java.util.ArrayList;
 import Model.Pessoa;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author j0nas
- */
 public class PessoaDao {
 
     Statement st;
@@ -59,7 +55,6 @@ public class PessoaDao {
 
     public ArrayList<Pessoa> buscaCadastroPessoa() {
         ArrayList<Pessoa> lista = new ArrayList<Pessoa>();
-
         try {
             PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(SELECTALL);
             ResultSet rs = preparedStatement.executeQuery();
@@ -83,14 +78,13 @@ public class PessoaDao {
                 lista.add(pessoa);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Problema ao carregar cadastro de pessoas : " + ex);
+            JOptionPane.showMessageDialog(null, "Problema ao carregar cadastro de pessoas: " + ex);
         }
         return lista;
     }
 
     public boolean updateCadastroPessoa(Pessoa pessoa) {
         try {
-
             PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(UPDATE);
             preparedStatement.setInt(1, pessoa.getIdPessoa());
             preparedStatement.setInt(2, pessoa.getIdCidade());

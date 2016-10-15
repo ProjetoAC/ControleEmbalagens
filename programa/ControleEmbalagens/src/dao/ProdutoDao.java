@@ -45,7 +45,6 @@ public class ProdutoDao {
 
     public ArrayList<Produto> buscaCadastroProduto() {
         ArrayList<Produto> lista = new ArrayList<Produto>();
-
         try {
             PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(SELECTALL);
             ResultSet rs = preparedStatement.executeQuery();
@@ -60,7 +59,7 @@ public class ProdutoDao {
                 lista.add(produto);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Problema ao carregar cadastro de produtos :" + ex);
+            JOptionPane.showMessageDialog(null, "Problema ao carregar cadastro de produtos: " + ex);
         }
         return lista;
     }
@@ -78,7 +77,7 @@ public class ProdutoDao {
             preparedStatement.execute();
             return true;
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Problema ao fazer update do update do cadastro de produto:" + ex);
+            JOptionPane.showMessageDialog(null, "Problema ao fazer update do update do cadastro de produto: " + ex);
         }
         return false;
     }
@@ -90,7 +89,7 @@ public class ProdutoDao {
             preparedStatement.execute();
             return true;
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Problema ao deletar o produto do cadastro produto:" + ex);
+            JOptionPane.showMessageDialog(null, "Problema ao deletar o produto do cadastro produto: " + ex);
         }
         return false;
     }
@@ -104,9 +103,8 @@ public class ProdutoDao {
             while (rs.next()) {
                 embalagem = rs.getString("descricao");
             }
-
         } catch (Exception ex) {
-            System.out.println("Problema ao carregar cadastro de cidades : " + ex);
+            System.out.println("Problema ao carregar cadastro de cidades: " + ex);
             JOptionPane.showMessageDialog(null, "Erro:" + ex);
         }
         return embalagem;
@@ -122,7 +120,7 @@ public class ProdutoDao {
                 nome = rs.getString("nome");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Problema ao carregar cadastro de cidades : " + ex);
+            JOptionPane.showMessageDialog(null, "Problema ao carregar cadastro de cidades: " + ex);
         }
         return nome;
     }

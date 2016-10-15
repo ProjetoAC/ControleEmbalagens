@@ -14,14 +14,13 @@ public class EmpresaDao {
     Statement st;
     PreparedStatement prepst;
 
-    static String INSERT = "INSERT INTO empresas("
-            + "idEmpresa, idCidade, nome, cnpj, endereco, numero, bairro, "
+    static String INSERT = "INSERT INTO empresas(idEmpresa, idCidade, nome, cnpj, endereco, numero, bairro, "
             + "complemento, cep, telefonefixo, telefonecelular, email) "
-            + "  VALUES ((SELECT COALESCE(max(idempresa)+1,1) FROM empresas),?,?,?,?,?,?,?,?,?,?,?);";
+            + "VALUES ((SELECT COALESCE(max(idempresa)+1,1) FROM empresas),?,?,?,?,?,?,?,?,?,?,?);";
     static String SELECTALL = "SELECT idEmpresa, idCidade, nome, cnpj, endereco, numero, bairro, "
             + "complemento, cep, telefonefixo, telefonecelular, email"
             + " FROM empresas order by nome;";
-    static String UPDATE = "UPDATE empresas SET idEmpresa = ?, idCidade = ?, nome = ?, cnpj = ?, "
+    static String UPDATE = "UPDATE empresas SET idCidade = ?, nome = ?, cnpj = ?, "
             + "endereco = ?, numero = ?, bairro = ? , complemento = ?, "
             + "cep = ?, telefonefixo = ?, telefonecelular = ?, email = ? WHERE idEmpresa = ?;";
     static String DELETE = "DELETE FROM empresas  WHERE idEmpresa = ?;";
@@ -47,15 +46,13 @@ public class EmpresaDao {
             preparedStatement.execute();
             return true;
         } catch (SQLException ex) {
-            System.out.println("Problema ao inserir Cadastro Empresa: " + ex);
-            JOptionPane.showMessageDialog(null, "Erro:" + ex);
+            JOptionPane.showMessageDialog(null, "Problema ao inserir Cadastro Empresa: " + ex);
         }
         return false;
     }
 
     public ArrayList<Empresa> buscaCadastroEmpresa() {
         ArrayList<Empresa> lista = new ArrayList<Empresa>();
-
         try {
             PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(SELECTALL);
             ResultSet rs = preparedStatement.executeQuery();
@@ -76,10 +73,8 @@ public class EmpresaDao {
                 empresa.setEmail(rs.getString("email"));
                 lista.add(empresa);
             }
-
         } catch (Exception ex) {
-            System.out.println("Problema ao carregar cadastro de empresas : " + ex);
-            JOptionPane.showMessageDialog(null, "Erro:" + ex);
+            JOptionPane.showMessageDialog(null, "Problema ao carregar cadastro de empresas: " + ex);
         }
         return lista;
     }
@@ -88,24 +83,22 @@ public class EmpresaDao {
         try {
 
             PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(UPDATE);
-            preparedStatement.setInt(1, empresa.getIdEmpresa());
-            preparedStatement.setInt(2, empresa.getIdCidade());
-            preparedStatement.setString(3, empresa.getNome());
-            preparedStatement.setString(4, empresa.getCnpj());
-            preparedStatement.setString(5, empresa.getEndereco());
-            preparedStatement.setInt(6, empresa.getNumero());
-            preparedStatement.setString(7, empresa.getBairro());
-            preparedStatement.setString(8, empresa.getComplemento());
-            preparedStatement.setString(10, empresa.getCep());
-            preparedStatement.setString(11, empresa.getTelfixo());
-            preparedStatement.setString(12, empresa.getTelcell());
-            preparedStatement.setString(13, empresa.getEmail());
-            preparedStatement.setInt(14, empresa.getIdEmpresa());
+            preparedStatement.setInt(1, empresa.getIdCidade());
+            preparedStatement.setString(2, empresa.getNome());
+            preparedStatement.setString(3, empresa.getCnpj());
+            preparedStatement.setString(4, empresa.getEndereco());
+            preparedStatement.setInt(5, empresa.getNumero());
+            preparedStatement.setString(6, empresa.getBairro());
+            preparedStatement.setString(7, empresa.getComplemento());
+            preparedStatement.setString(8, empresa.getCep());
+            preparedStatement.setString(9, empresa.getTelfixo());
+            preparedStatement.setString(10, empresa.getTelcell());
+            preparedStatement.setString(11, empresa.getEmail());
+            preparedStatement.setInt(12, empresa.getIdEmpresa());
             preparedStatement.execute();
             return true;
         } catch (Exception ex) {
-            System.out.println("Problema ao fazer update do update do cadastro de empresa: " + ex);
-            JOptionPane.showMessageDialog(null, "Erro:" + ex);
+            JOptionPane.showMessageDialog(null, "Problema ao fazer update do update do cadastro de empresa: " + ex);
         }
         return false;
     }
@@ -117,15 +110,13 @@ public class EmpresaDao {
             preparedStatement.execute();
             return true;
         } catch (Exception ex) {
-            System.out.println("Problema ao deletar o empresa do cadastro empresa: " + ex);
-            JOptionPane.showMessageDialog(null, "Erro:" + ex);
+            JOptionPane.showMessageDialog(null, "Problema ao deletar o empresa do cadastro empresa: " + ex);
         }
         return false;
     }
 
     public int buscaIdNomeEmpresa(String nome) {
         int id = 0;
-
         try {
             PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(BUSCAIDEMPRESA);
             preparedStatement.setString(1, nome);
@@ -141,7 +132,6 @@ public class EmpresaDao {
 
     public int buscaIdNomeCidade(String nome) {
         int id = 0;
-
         try {
             PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(BUSCAIDCIDADE);
             preparedStatement.setString(1, nome);

@@ -30,7 +30,6 @@ public class PesquisarPessoa extends javax.swing.JInternalFrame {
         this.setTitle("Consulta de Cadastro de Empresas");
         desativaBotao();
         modeloTabela();
-        pc = new PessoaController();
         exibirDadosCadastros();
     }
 

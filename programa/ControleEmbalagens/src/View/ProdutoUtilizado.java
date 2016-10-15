@@ -357,8 +357,12 @@ public class ProdutoUtilizado extends javax.swing.JInternalFrame {
     }
 
     public void excluirDados() {
+        if (dv == null) {
+            dv = new DevolucaoController();
+        }
+
         if (0 == JOptionPane.showConfirmDialog(rootPane, "Deseja excluir essas informações?", "Excluir", JOptionPane.YES_NO_OPTION)) {
-            if (new DevolucaoController().excluirCadastroDevolucao(idDevolucao)) {
+            if (dv.excluirCadastroDevolucao(idDevolucao)) {
                 limparCampos();
             }
         }

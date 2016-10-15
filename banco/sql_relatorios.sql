@@ -37,12 +37,9 @@ INNER JOIN produtos p USING (idProduto)
 GROUP BY p.nome, e.nome
 ORDER BY e.nome
 
---relatorio de quantidade de dias que a embalagem está aguardando devolucao
-
-
-
-
-
-
-
+--listagem de todos os produtos vazios ordenados por classe toxicologica
+SELECT p.classetox, p.nome, SUM(d.quantidade) FROM devolucao d
+INNER JOIN produtos p USING (idProduto)
+WHERE flagentrega = 'F'
+GROUP BY p.classetox, p.nome ORDER BY p.classetox, p.nome
 

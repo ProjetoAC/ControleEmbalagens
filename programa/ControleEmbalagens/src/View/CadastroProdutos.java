@@ -493,7 +493,10 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
     }
 
     private void carregaEmbalagem() {
-        listaEmbalagem = new EmbalagemController().buscaCadastroEmbalagem();
+        if (ec == null){
+            ec = new EmbalagemController();
+        }
+        listaEmbalagem = ec.buscaCadastroEmbalagem();
         for (Embalagem e : listaEmbalagem) {
             jcbEmbalagem.addItem(e.getDescricao());
         }

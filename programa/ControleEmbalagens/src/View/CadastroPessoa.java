@@ -149,12 +149,6 @@ public class CadastroPessoa extends javax.swing.JInternalFrame {
             }
         });
 
-        txtNome.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtNomeKeyTyped(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -510,10 +504,6 @@ public class CadastroPessoa extends javax.swing.JInternalFrame {
         jcbCidade.grabFocus();
     }//GEN-LAST:event_jcbEstadoActionPerformed
 
-    private void txtNomeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNomeKeyTyped
-
     private void txtCEPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCEPActionPerformed
         txtComplemento.grabFocus();
     }//GEN-LAST:event_txtCEPActionPerformed
@@ -728,9 +718,11 @@ public class CadastroPessoa extends javax.swing.JInternalFrame {
     }
 
     public void excluirDados() {
-
+        if (pc == null){
+            pc = new PessoaController();
+        }
         if (0 == JOptionPane.showConfirmDialog(rootPane, "Deseja excluir essas informações?", "Excluir", JOptionPane.YES_NO_OPTION)) {
-            if (new PessoaController().excluirCadastroPessoa(idPessoa)) {
+            if (pc.excluirCadastroPessoa(idPessoa)) {
                 limparCampos();
             }
         }

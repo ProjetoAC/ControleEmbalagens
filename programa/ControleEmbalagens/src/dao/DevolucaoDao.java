@@ -77,7 +77,7 @@ public class DevolucaoDao {
                 lista.add(devolucao);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Problema ao carregar cadastro de devolucao :" + ex);
+            JOptionPane.showMessageDialog(null, "Problema ao carregar cadastro de devolucao: " + ex);
         }
         return lista;
     }
@@ -97,7 +97,7 @@ public class DevolucaoDao {
             preparedStatement.execute();
             return true;
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Problema ao fazer update do update do cadastro de devolucao:" + ex);
+            JOptionPane.showMessageDialog(null, "Problema ao fazer update do update do cadastro de devolucao: " + ex);
         }
         return false;
     }
@@ -109,26 +109,23 @@ public class DevolucaoDao {
             preparedStatement.execute();
             return true;
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Problema ao deletar o cadastro devolucao:" + ex);
+            JOptionPane.showMessageDialog(null, "Problema ao deletar o cadastro devolucao: " + ex);
         }
         return false;
     }
 
-    public boolean updateDevolucao(int idDevolucao, char opcao, String data) {
+    //public boolean updateDevolucao(int idDevolucao, char opcao, String data) {
+    public boolean updateDevolucao(Devolucao devolucao) {
         try {
 
             PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(UPDATEDEVOLUCAO);
-            /*            preparedStatement.setString(1, String.valueOf(devolucao.getFlagDevolucao()));
+            preparedStatement.setString(1, String.valueOf(devolucao.getFlagDevolucao()));
             preparedStatement.setString(2, devolucao.getDataEntrega());
-            preparedStatement.setInt(3, devolucao.getIdDevolucao());*/
-            preparedStatement.setString(1, String.valueOf(opcao));
-            preparedStatement.setString(2, data);
-            preparedStatement.setInt(3, idDevolucao);
-            System.out.println("" + preparedStatement.toString());
+            preparedStatement.setInt(3, devolucao.getIdDevolucao());
             preparedStatement.execute();
             return true;
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Problema ao fazer update do update do cadastro de devolucao:" + ex);
+            JOptionPane.showMessageDialog(null, "Problema ao fazer update do update do cadastro de devolucao: " + ex);
         }
         return false;
     }
@@ -143,7 +140,7 @@ public class DevolucaoDao {
                 nome = rs.getString("nome");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Problema ao carregar nome empresa : " + ex);
+            JOptionPane.showMessageDialog(null, "Problema ao carregar nome empresa: " + ex);
         }
         return nome;
     }
@@ -158,7 +155,7 @@ public class DevolucaoDao {
                 embalagem = rs.getString("descricao");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Problema ao carregar descrição embalagem : " + ex);
+            JOptionPane.showMessageDialog(null, "Problema ao carregar descrição embalagem: " + ex);
         }
         return embalagem;
     }
@@ -173,7 +170,7 @@ public class DevolucaoDao {
                 nome = rs.getString("nome");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Problema ao carregar nome pessoa : " + ex);
+            JOptionPane.showMessageDialog(null, "Problema ao carregar nome pessoa: " + ex);
         }
         return nome;
     }
@@ -188,7 +185,7 @@ public class DevolucaoDao {
                 descricao = rs.getString("classetox");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Problema ao carregar classe toxicológica : " + ex);
+            JOptionPane.showMessageDialog(null, "Problema ao carregar classe toxicológica: " + ex);
         }
         return descricao;
     }
@@ -203,7 +200,7 @@ public class DevolucaoDao {
                 nome = rs.getString("nome");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Problema ao carregar nome do produto : " + ex);
+            JOptionPane.showMessageDialog(null, "Problema ao carregar nome do produto: " + ex);
         }
         return nome;
     }
@@ -227,7 +224,7 @@ public class DevolucaoDao {
                 lista.add(devolucao);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Problema ao pesquisar nome produto:" + ex);
+            JOptionPane.showMessageDialog(null, "Problema ao pesquisar nome produto: " + ex);
         }
         return lista;
     }

@@ -319,7 +319,6 @@ public class CadastroEstados extends javax.swing.JInternalFrame {
         if (ec == null) {
             ec = new EstadoController();
         }
-        ec = new EstadoController();
         lista = ec.buscaCadastroEstado();
 
         for (int x = 0; x < lista.size(); x++) {
