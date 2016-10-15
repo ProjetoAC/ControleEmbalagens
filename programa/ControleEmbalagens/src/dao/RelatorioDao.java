@@ -36,6 +36,9 @@ public class RelatorioDao {
     static String SELECTRelEmbPro = "SELECT p.nome, e.descricao, SUM(d.quantidade) "
             + "FROM devolucao d INNER JOIN produtos p USING (idProduto) INNER JOIN embalagens e USING (idEmbalagem) "
             + "GROUP BY p.nome, e.descricao;";
+    static String SELECTRelEmbClasse = "SELECT p.classetox, p.nome, SUM(d.quantidade) FROM devolucao d "
+            + "INNER JOIN produtos p USING (idProduto) WHERE flagentrega = 'F' "
+            + "GROUP BY p.classetox, p.nome ORDER BY p.classetox, p.nome;";
 
     public ResultSet relatorioEmbAentregar() {
         try {
@@ -80,6 +83,16 @@ public class RelatorioDao {
     public ResultSet relatorioEmbProduto() {
         try {
             PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(SELECTRelEmbPro);
+            rs = preparedStatement.executeQuery();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao selecionar os dados no BD: " + ex);
+        }
+        return rs;
+    }
+
+    public ResultSet relatorioEmbClasse() {
+        try {
+            PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(SELECTRelEmbClasse);
             rs = preparedStatement.executeQuery();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao selecionar os dados no BD: " + ex);

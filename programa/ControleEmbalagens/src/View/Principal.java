@@ -73,6 +73,7 @@ public class Principal extends javax.swing.JFrame {
         jmiEmbPessoa = new javax.swing.JMenuItem();
         jmiEmbEmp = new javax.swing.JMenuItem();
         jmiEmbProd = new javax.swing.JMenuItem();
+        jmiEmbClasse = new javax.swing.JMenuItem();
         jmSobre = new javax.swing.JMenu();
         jmiSobre = new javax.swing.JMenuItem();
 
@@ -211,6 +212,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jmiEmbProd);
+
+        jmiEmbClasse.setText("Embagens por Classe Toxicológica");
+        jmiEmbClasse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiEmbClasseActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jmiEmbClasse);
 
         jMenuBar1.add(jMenu1);
 
@@ -362,6 +371,10 @@ public class Principal extends javax.swing.JFrame {
         relatorioEmbProduto();
     }//GEN-LAST:event_jmiEmbProdActionPerformed
 
+    private void jmiEmbClasseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEmbClasseActionPerformed
+        relatorioEmbClasse();
+    }//GEN-LAST:event_jmiEmbClasseActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -421,6 +434,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiCidades;
     private javax.swing.JMenuItem jmiDevolver;
     private javax.swing.JMenuItem jmiEmbAEnt;
+    private javax.swing.JMenuItem jmiEmbClasse;
     private javax.swing.JMenuItem jmiEmbEmp;
     private javax.swing.JMenuItem jmiEmbPessoa;
     private javax.swing.JMenuItem jmiEmbProd;
@@ -445,6 +459,7 @@ public class Principal extends javax.swing.JFrame {
     String caminhoRelEmbEmp = getCaminho() + "/src/Report/RelatorioEmbEmpresa.jasper";
     String caminhoRelEmbPes = getCaminho() + "/src/Report/RelatorioEmbPessoa.jasper";
     String caminhoRelEmbPro = getCaminho() + "/src/Report/RelatorioEmbProduto.jasper";
+    String caminhoRelEmbClasse = getCaminho() + "/src/Report/RelatorioEmbClasse.jasper";
 
     private String getCaminho() {
 
@@ -453,7 +468,7 @@ public class Principal extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(null, "Erro ao carregar caminho do relatório");
         }
-       return "";
+        return "";
     }
 
     public void relatorioEmbAentregar() {
@@ -524,6 +539,21 @@ public class Principal extends javax.swing.JFrame {
         try {
             JRResultSetDataSource relResul = new JRResultSetDataSource(rc.relatorioEmbProduto());
             JasperPrint jpPrint = JasperFillManager.fillReport(caminhoRelEmbPro, new HashMap(), relResul);
+            JasperViewer jv = new JasperViewer(jpPrint, false);
+            jv.setDefaultCloseOperation(JasperViewer.DISPOSE_ON_CLOSE);
+            jv.setVisible(true);
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao chamar o relatório de devolucao de embalagens " + ex);
+        }
+    }
+
+    public void relatorioEmbClasse() {
+        if (rc == null) {
+            rc = new RelatorioController();
+        }
+        try {
+            JRResultSetDataSource relResul = new JRResultSetDataSource(rc.relatorioEmbClasse());
+            JasperPrint jpPrint = JasperFillManager.fillReport(caminhoRelEmbClasse, new HashMap(), relResul);
             JasperViewer jv = new JasperViewer(jpPrint, false);
             jv.setDefaultCloseOperation(JasperViewer.DISPOSE_ON_CLOSE);
             jv.setVisible(true);

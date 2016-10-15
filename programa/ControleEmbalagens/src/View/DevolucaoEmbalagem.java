@@ -51,6 +51,8 @@ public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
         jPanel3 = new javax.swing.JPanel();
         btnSair = new javax.swing.JButton();
 
+        setClosable(true);
+
         jLabel1.setText("Produto:");
 
         jLabel3.setText("Embalagem vazia foi devolvida:");

@@ -75,7 +75,6 @@ public class CadastroPessoa extends javax.swing.JInternalFrame {
         btnSalvar = new javax.swing.JButton();
 
         setClosable(true);
-        setPreferredSize(null);
 
         jLabel1.setText("Nome:");
 

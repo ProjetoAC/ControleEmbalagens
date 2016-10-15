@@ -43,4 +43,7 @@ public class RelatorioController {
         return relatorioDao.relatorioEmbProduto();
     }
 
+    public ResultSet relatorioEmbClasse() {
+        return relatorioDao.relatorioEmbClasse();
+    }
 }

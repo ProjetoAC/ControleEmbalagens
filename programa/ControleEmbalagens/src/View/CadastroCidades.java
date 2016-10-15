@@ -202,7 +202,7 @@ public class CadastroCidades extends javax.swing.JInternalFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(12, 12, 12)
                 .addComponent(btnSair)
-                .addGap(18, 18, 18))
+                .addContainerGap())
         );
 
         pack();
