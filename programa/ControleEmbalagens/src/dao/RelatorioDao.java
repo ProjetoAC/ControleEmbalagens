@@ -26,7 +26,7 @@ public class RelatorioDao {
             + "GROUP BY p.nome, a.nome ORDER BY a.nome;";
     static String SELECTRelEmbPro = "SELECT p.nome, e.descricao, SUM(d.quantidade) "
             + "FROM devolucao d INNER JOIN produtos p USING (idProduto) INNER JOIN embalagens e USING (idEmbalagem) "
-            + "GROUP BY p.nome, e.descricao;";
+            + "WHERE flagentrega = 'F'GROUP BY p.nome, e.descricao;";
     static String SELECTRelEmbClasse = "SELECT p.classetox, p.nome, SUM(d.quantidade) FROM devolucao d "
             + "INNER JOIN produtos p USING (idProduto) WHERE flagentrega = 'F' "
             + "GROUP BY p.classetox, p.nome ORDER BY p.classetox, p.nome;";

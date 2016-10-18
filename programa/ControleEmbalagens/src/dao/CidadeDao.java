@@ -26,8 +26,6 @@ public class CidadeDao {
     static String SELECBUSCACIDADE = "SELECT nome FROM cidades WHERE idCidade = ?;";
 
     public boolean insereCadastroCidade(Cidade cidade) {
-        ResultSet rs;
-        int id = 0;
         try {
             PreparedStatement preparedStatement = Conexao.getConexao().prepareStatement(INSERT);
             preparedStatement.setInt(1, cidade.getIdEstado());

@@ -13,7 +13,12 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
 import java.io.File;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.HashMap;
+import javax.tools.DocumentationTool;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperReport;
 
 /**
  *
@@ -224,11 +229,6 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jmSobre.setText("Sobre");
-        jmSobre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmSobreActionPerformed(evt);
-            }
-        });
 
         jmiSobre.setText("Informações");
         jmiSobre.addActionListener(new java.awt.event.ActionListener() {
@@ -263,18 +263,14 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jmiPessoasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiPessoasActionPerformed
-        if (telaCadPessoas == null) {
-            telaCadPessoas = new CadastroPessoa();
-        }
+        telaCadPessoas = new CadastroPessoa();
         jdpPrincipal.add(telaCadPessoas);
         telaCadPessoas.setVisible(true);
         centralizaForm(telaCadPessoas);
     }//GEN-LAST:event_jmiPessoasActionPerformed
 
     private void jmiEmpresasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEmpresasActionPerformed
-        if (telaCadEmpresa == null) {
-            telaCadEmpresa = new CadastroEmpresa();
-        }
+        telaCadEmpresa = new CadastroEmpresa();
         jdpPrincipal.add(telaCadEmpresa);
         telaCadEmpresa.setVisible(true);
         centralizaForm(telaCadEmpresa);
@@ -285,67 +281,49 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jmiEstadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEstadosActionPerformed
-        if (telaCadEstados == null) {
-            telaCadEstados = new CadastroEstados();
-        }
+        telaCadEstados = new CadastroEstados();
         jdpPrincipal.add(telaCadEstados);
         telaCadEstados.setVisible(true);
         centralizaForm(telaCadEstados);
     }//GEN-LAST:event_jmiEstadosActionPerformed
 
     private void jmiCidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiCidadesActionPerformed
-        if (telaCadCidades == null) {
-            telaCadCidades = new CadastroCidades();
-        }
+        telaCadCidades = new CadastroCidades();
         jdpPrincipal.add(telaCadCidades);
         telaCadCidades.setVisible(true);
         centralizaForm(telaCadCidades);
     }//GEN-LAST:event_jmiCidadesActionPerformed
 
     private void jmiCadEmbalagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiCadEmbalagemActionPerformed
-        if (telaCadEmbalagem == null) {
-            telaCadEmbalagem = new CadastroEmbalagens();
-        }
+        telaCadEmbalagem = new CadastroEmbalagens();
         jdpPrincipal.add(telaCadEmbalagem);
         telaCadEmbalagem.setVisible(true);
         centralizaForm(telaCadEmbalagem);
     }//GEN-LAST:event_jmiCadEmbalagemActionPerformed
 
     private void jmiProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiProdutosActionPerformed
-        if (telaCadProduto == null) {
-            telaCadProduto = new CadastroProdutos();
-        }
+        telaCadProduto = new CadastroProdutos();
         jdpPrincipal.add(telaCadProduto);
         telaCadProduto.setVisible(true);
         centralizaForm(telaCadProduto);
     }//GEN-LAST:event_jmiProdutosActionPerformed
 
-    private void jmSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmSobreActionPerformed
-
-    }//GEN-LAST:event_jmSobreActionPerformed
-
     private void jmiLancamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiLancamentoActionPerformed
-        if (telaProdUtilizado == null) {
-            telaProdUtilizado = new ProdutoUtilizado();
-        }
+        telaProdUtilizado = new ProdutoUtilizado();
         jdpPrincipal.add(telaProdUtilizado);
         telaProdUtilizado.setVisible(true);
         centralizaForm(telaProdUtilizado);
     }//GEN-LAST:event_jmiLancamentoActionPerformed
 
     private void jmiSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiSobreActionPerformed
-        if (telaSobre == null) {
-            telaSobre = new Sobre();
-        }
+        telaSobre = new Sobre();
         jdpPrincipal.add(telaSobre);
         telaSobre.setVisible(true);
         centralizaForm(telaSobre);
     }//GEN-LAST:event_jmiSobreActionPerformed
 
     private void jmiDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiDevolverActionPerformed
-        if (telaProdDev == null) {
-            telaProdDev = new DevolucaoEmbalagem();
-        }
+        telaProdDev = new DevolucaoEmbalagem();
         jdpPrincipal.add(telaProdDev);
         telaProdDev.setVisible(true);
         centralizaForm(telaProdDev);
@@ -462,29 +440,41 @@ public class Principal extends javax.swing.JFrame {
     String caminhoRelEmbClasse = getCaminho() + "/src/Report/RelatorioEmbClasse.jasper";
 
     private String getCaminho() {
-
         try {
-            return new File("").getCanonicalPath();
+            return new File("").getAbsolutePath();
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(null, "Erro ao carregar caminho do relatório");
         }
         return "";
     }
+/*
+    private String caminho() {
+        try {
+            
+            //URL caminho = Principal.class.getProtectionDomain().getCodeSource().getLocation();
+            URL caminho = Principal.class.getResource("/src/Report/RelatorioEmbADevolver.jasper");
+            String teste = caminho.toString();
+            return teste;
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, "Erro ao carregar caminho do relatório");
+        }
+        return "";
+    }*/
 
     public void relatorioEmbAentregar() {
         if (rc == null) {
             rc = new RelatorioController();
         }
         try {
+            System.out.println(caminhoRelEmbAent);
             JRResultSetDataSource relResul = new JRResultSetDataSource(rc.relatorioEmbAentregar());
             JasperPrint jpPrint = JasperFillManager.fillReport(caminhoRelEmbAent, new HashMap(), relResul);
             JasperViewer jv = new JasperViewer(jpPrint, false);
             jv.setDefaultCloseOperation(JasperViewer.DISPOSE_ON_CLOSE);
             jv.setVisible(true);
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao chamar o relatório de embalagens a entregar" + ex);
+            JOptionPane.showMessageDialog(null, "Erro ao chamar o relatório de devolucao de embalagens " + ex);
         }
-
     }
 
     public void relatorioEmbDevolvidas() {

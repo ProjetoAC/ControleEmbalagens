@@ -7,6 +7,7 @@ import controller.CidadeController;
 import controller.EstadoController;
 import java.awt.Container;
 import java.util.ArrayList;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
@@ -243,7 +244,6 @@ public class CadastroCidades extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_txtCidadeKeyTyped
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnGravar;
@@ -364,7 +364,6 @@ public class CadastroCidades extends javax.swing.JInternalFrame {
             }
             cc.excluirCadastroCidade(getIdCidadeSelecionado());
             limparCampos();
-            exibirDadosCadastros();
         }
     }
 

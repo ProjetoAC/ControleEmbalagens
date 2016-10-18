@@ -1,4 +1,3 @@
-
 package View;
 
 import Model.Embalagem;
@@ -493,7 +492,7 @@ public class CadastroProdutos extends javax.swing.JInternalFrame {
     }
 
     private void carregaEmbalagem() {
-        if (ec == null){
+        if (ec == null) {
             ec = new EmbalagemController();
         }
         listaEmbalagem = ec.buscaCadastroEmbalagem();
