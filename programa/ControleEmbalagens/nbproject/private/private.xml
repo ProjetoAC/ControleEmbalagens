@@ -4,6 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/j0nas/MEGA/aprender_e_crescer/ControleEmbalagens/programa/ControleEmbalagens/src/View/Principal.java</file>
+            <file>file:/home/j0nas/MEGA/aprender_e_crescer/ControleEmbalagens/programa/ControleEmbalagens/src/View/ProdUtiPesq.java</file>
+            <file>file:/home/j0nas/MEGA/aprender_e_crescer/ControleEmbalagens/programa/ControleEmbalagens/src/View/DevolucaoEmbalagem.java</file>
+            <file>file:/home/j0nas/MEGA/aprender_e_crescer/ControleEmbalagens/programa/ControleEmbalagens/src/controller/DevolucaoController.java</file>
+            <file>file:/home/j0nas/MEGA/aprender_e_crescer/ControleEmbalagens/programa/ControleEmbalagens/src/dao/DevolucaoDao.java</file>
         </group>
     </open-files>
 </project-private>

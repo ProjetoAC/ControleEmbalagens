@@ -19,6 +19,7 @@ import java.util.HashMap;
 import javax.tools.DocumentationTool;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 /**
  *
@@ -86,7 +87,7 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.setBorder(null);
 
-        jmArquivos.setText("Arquivo");
+        jmArquivos.setText("Configurações");
 
         jMenuItem6.setText("Sair");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
@@ -431,13 +432,14 @@ public class Principal extends javax.swing.JFrame {
         frame.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
                 (desktopSize.height - jInternalFrameSize.height) / 2);
     }
-
-    String caminhoRelEmbAent = getCaminho() + "/src/Report/RelatorioEmbADevolver.jasper";
+   
+    String caminhoRelEmbAent = getCaminho()  + "/src/Report/RelatorioEmbADevolver.jasper";
     String caminhoRelEmbDev = getCaminho() + "/src/Report/RelatorioEmbDevolvidas.jasper";
     String caminhoRelEmbEmp = getCaminho() + "/src/Report/RelatorioEmbEmpresa.jasper";
     String caminhoRelEmbPes = getCaminho() + "/src/Report/RelatorioEmbPessoa.jasper";
     String caminhoRelEmbPro = getCaminho() + "/src/Report/RelatorioEmbProduto.jasper";
     String caminhoRelEmbClasse = getCaminho() + "/src/Report/RelatorioEmbClasse.jasper";
+    
 
     private String getCaminho() {
         try {
@@ -447,26 +449,12 @@ public class Principal extends javax.swing.JFrame {
         }
         return "";
     }
-/*
-    private String caminho() {
-        try {
-            
-            //URL caminho = Principal.class.getProtectionDomain().getCodeSource().getLocation();
-            URL caminho = Principal.class.getResource("/src/Report/RelatorioEmbADevolver.jasper");
-            String teste = caminho.toString();
-            return teste;
-        } catch (Exception e) {
-            JOptionPane.showConfirmDialog(null, "Erro ao carregar caminho do relatório");
-        }
-        return "";
-    }*/
 
     public void relatorioEmbAentregar() {
         if (rc == null) {
             rc = new RelatorioController();
         }
         try {
-            System.out.println(caminhoRelEmbAent);
             JRResultSetDataSource relResul = new JRResultSetDataSource(rc.relatorioEmbAentregar());
             JasperPrint jpPrint = JasperFillManager.fillReport(caminhoRelEmbAent, new HashMap(), relResul);
             JasperViewer jv = new JasperViewer(jpPrint, false);

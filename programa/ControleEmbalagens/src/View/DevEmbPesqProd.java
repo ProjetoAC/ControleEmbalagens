@@ -254,9 +254,7 @@ public class DevEmbPesqProd extends javax.swing.JInternalFrame {
         modeloTabela.getDataVector().removeAllElements();
         modeloTabela();
         ArrayList<Produto> lista;
-        if (pc == null) {
-            pc = new ProdutoController();
-        }
+        pc = new ProdutoController();
         lista = pc.buscaCadastroProduto();
 
         for (int x = 0; x < lista.size(); x++) {
@@ -293,9 +291,7 @@ public class DevEmbPesqProd extends javax.swing.JInternalFrame {
                 break;
             }
         }
-        if (enviaDados == null) {
-            enviaDados = new DevolucaoEmbalagem();
-        }
+        enviaDados = new DevolucaoEmbalagem();
         Principal.jdpPrincipal.add(enviaDados);
         enviaDados.setVisible(true);
         telaPrincipal.centralizaForm(enviaDados);

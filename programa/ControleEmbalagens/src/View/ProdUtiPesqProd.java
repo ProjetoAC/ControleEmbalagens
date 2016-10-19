@@ -6,6 +6,7 @@ import controller.EmbalagemController;
 import controller.ProdutoController;
 import java.awt.Container;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
 
@@ -166,7 +167,11 @@ public class ProdUtiPesqProd extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtPesquisaKeyReleased
 
     private void btnSelecionaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionaActionPerformed
-        selecionaDadosTabela();
+        if (tblPesqProduto.getSelectedRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "Favor selecione uma linha na tabela!", "AVISO!", JOptionPane.WARNING_MESSAGE);
+        } else {
+            selecionaDadosTabela();
+        }
     }//GEN-LAST:event_btnSelecionaActionPerformed
 
     private void btnLimpaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpaActionPerformed
@@ -290,9 +295,7 @@ public class ProdUtiPesqProd extends javax.swing.JInternalFrame {
                 break;
             }
         }
-        if (enviaDados == null) {
-            enviaDados = new ProdutoUtilizado();
-        }
+        enviaDados = new ProdutoUtilizado();
         Principal.jdpPrincipal.add(enviaDados);
         enviaDados.setVisible(true);
         telaPrincipal.centralizaForm(enviaDados);

@@ -260,9 +260,7 @@ public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPesqPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesqPActionPerformed
-        if (telaPesqProduto == null) {
-            telaPesqProduto = new DevEmbPesqProd();
-        }
+        telaPesqProduto = new DevEmbPesqProd();
         Principal.jdpPrincipal.add(telaPesqProduto);
         telaPesqProduto.setVisible(true);
         telaPrincipal.centralizaForm(telaPesqProduto);
@@ -287,9 +285,7 @@ public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void btnPesqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesqActionPerformed
-        if (telaPesqProdutoDev == null) {
-            telaPesqProdutoDev = new DevEmbPesq();
-        }
+        telaPesqProdutoDev = new DevEmbPesq();
         Principal.jdpPrincipal.add(telaPesqProdutoDev);
         telaPesqProdutoDev.setVisible(true);
         telaPrincipal.centralizaForm(telaPesqProdutoDev);
@@ -405,11 +401,8 @@ public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
     }
 
     public void dadosPesquisaProduto(int a, int b) {
-        if (pc == null) {
-            pc = new ProdutoController();
-        }
-        idDevolucao = a;
-        txtProduto.setText(pc.buscarNomeProduto(b));
+        pc = new ProdutoController();
+        txtProduto.setText(pc.buscarNomeProduto(a));
         txtEmbalagem.setText(pc.buscarEmbalagem(b));
         jcbSim.grabFocus();
     }
@@ -418,9 +411,12 @@ public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
         if (pc == null) {
             pc = new ProdutoController();
         }
+
         idDevolucao = a;
         txtProduto.setText(pc.buscarNomeProduto(b));
         txtEmbalagem.setText(pc.buscarEmbalagem(b));
+        String teste = pc.buscarEmbalagem(b);
+        System.out.println(teste);
         if (c == 'T') {
             jcbSim.setSelected(true);
             jcbNao.setSelected(false);
@@ -428,6 +424,7 @@ public class DevolucaoEmbalagem extends javax.swing.JInternalFrame {
             jcbSim.setSelected(false);
             jcbNao.setSelected(true);
         }
+        txtData.setText(d);
         jcbSim.grabFocus();
     }
 }

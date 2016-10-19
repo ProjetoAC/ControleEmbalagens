@@ -263,8 +263,8 @@ public class ProdUtiPesq extends javax.swing.JInternalFrame {
         dados[1] = carregaProdutoTabela(devolucao.getIdProduto());
         dados[2] = devolucao.getData();
         dados[3] = devolucao.getQuantidade();
-        dados[4] = dv.buscarNomePessoa(devolucao.getIdPessoa());
-        dados[5] = dv.buscarNomeEmpresa(devolucao.getIdEmpresa());
+        dados[4] = dv.buscarNomePessoa(devolucao.getIdDevolucao());
+        dados[5] = dv.buscarNomeEmpresa(devolucao.getIdDevolucao());
         dados[6] = carregaOpcaoFlag(devolucao.getFlagDevolucao());
         dados[7] = devolucao.getDataEntrega();
         modeloTabela.addRow(dados);
@@ -336,9 +336,7 @@ public class ProdUtiPesq extends javax.swing.JInternalFrame {
                 break;
             }
         }
-        if (enviaDadosTabela == null) {
-            enviaDadosTabela = new ProdutoUtilizado();
-        }
+        enviaDadosTabela = new ProdutoUtilizado();
         Principal.jdpPrincipal.add(enviaDadosTabela);
         enviaDadosTabela.setVisible(true);
         telaPrincipal.centralizaForm(enviaDadosTabela);

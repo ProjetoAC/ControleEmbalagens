@@ -264,8 +264,8 @@ public class DevEmbPesq extends javax.swing.JInternalFrame {
         dados[1] = carregaProdutoTabela(devolucao.getIdProduto());
         dados[2] = devolucao.getData();
         dados[3] = devolucao.getQuantidade();
-        dados[4] = dv.buscarNomePessoa(devolucao.getIdPessoa());
-        dados[5] = dv.buscarNomeEmpresa(devolucao.getIdEmpresa());
+        dados[4] = dv.buscarNomePessoa(devolucao.getIdDevolucao());
+        dados[5] = dv.buscarNomeEmpresa(devolucao.getIdDevolucao());
         dados[6] = carregaOpcaoFlag(devolucao.getFlagDevolucao());
         dados[7] = devolucao.getDataEntrega();
         modeloTabela.addRow(dados);
@@ -290,9 +290,7 @@ public class DevEmbPesq extends javax.swing.JInternalFrame {
         modeloTabela.getDataVector().removeAllElements();
         modeloTabela();
         ArrayList<Devolucao> lista;
-        if (dv == null) {
-            dv = new DevolucaoController();
-        }
+        dv = new DevolucaoController();
         lista = dv.buscaCadastroDevolucao();
 
         for (int x = 0; x < lista.size(); x++) {
@@ -304,9 +302,7 @@ public class DevEmbPesq extends javax.swing.JInternalFrame {
 
     private String carregaProdutoTabela(int idProduto) {
         String nome = "";
-        if (pc == null) {
-            pc = new ProdutoController();
-        }
+        pc = new ProdutoController();
         return nome = pc.buscarNomeProduto(idProduto);
     }
 
@@ -339,9 +335,7 @@ public class DevEmbPesq extends javax.swing.JInternalFrame {
                 break;
             }
         }
-        if (enviaDadosTabela == null) {
-            enviaDadosTabela = new DevolucaoEmbalagem();
-        }
+        enviaDadosTabela = new DevolucaoEmbalagem();
         Principal.jdpPrincipal.add(enviaDadosTabela);
         enviaDadosTabela.setVisible(true);
         telaPrincipal.centralizaForm(enviaDadosTabela);
